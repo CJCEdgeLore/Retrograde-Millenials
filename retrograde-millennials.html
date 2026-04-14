@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retrograde Millennials Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07060f; --surface:#0e0c1a; --surface2:#130f22; --border:#2a1f3d;
+  --crimson:#8b1a2a; --crimson2:#c0293e;
+  --gold:#c9a84c; --gold2:#f0d080;
+  --navy:#0f1b3d; --navy2:#1a2d5a; --sapphire:#2a4a8a;
+  --violet:#6b3fa0; --violet2:#a07fd8;
+  --emerald:#1a5c3a; --emerald2:#2a9a5e;
+  --text:#e8dfc8; --muted:#7a6d8a;
+  --glow-r:rgba(139,26,42,0.35); --glow-b:rgba(42,74,138,0.35);
+  --glow-v:rgba(107,63,160,0.35); --glow-g:rgba(42,154,94,0.3);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IM Fell English',Georgia,serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(ellipse 60% 50% at 15% 20%,rgba(139,26,42,.18) 0%,transparent 70%),
+  radial-gradient(ellipse 60% 50% at 85% 70%,rgba(42,74,138,.18) 0%,transparent 70%),
+  radial-gradient(ellipse 40% 30% at 50% 50%,rgba(20,10,40,.5) 0%,transparent 100%);
+  pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.6;}
+
+.wrapper{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:40px 24px 100px;}
+
+/* ── HEADER ── */
+header{text-align:center;margin-bottom:32px;}
+.crest{font-size:36px;margin-bottom:10px;filter:drop-shadow(0 0 12px var(--crimson2));animation:breathe 4s ease-in-out infinite;}
+@keyframes breathe{
+  0%,100%{filter:drop-shadow(0 0 12px var(--crimson2));}
+  50%{filter:drop-shadow(0 0 28px var(--sapphire)) drop-shadow(0 0 10px var(--gold));}
+}
+h1{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,5vw,46px);font-weight:900;letter-spacing:.05em;
+  background:linear-gradient(135deg,var(--crimson2) 0%,var(--gold2) 45%,var(--sapphire) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;}
+.subtitle{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.28em;color:var(--muted);margin-top:10px;text-transform:uppercase;font-style:italic;}
+.header-rule{display:flex;align-items:center;gap:12px;margin-top:18px;}
+.header-rule::before,.header-rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--crimson),var(--sapphire),transparent);}
+.header-rule span{color:var(--gold);font-size:15px;}
+
+/* ── USER BAR ── */
+#user-bar{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;}
+.ub-left{flex:1;display:flex;align-items:center;gap:10px;}
+.ub-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:1px solid var(--border);background:var(--surface2);}
+.ub-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.1em;color:var(--gold2);}
+.ub-sub{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-top:1px;}
+.btn-ghost{background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.btn-ghost:hover{border-color:var(--crimson2);color:var(--crimson2);}
+
+/* ── GATE ── */
+#gate{position:fixed;inset:0;z-index:200;background:rgba(7,6,15,.97);display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease;}
+.gate-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:40px 36px;width:100%;max-width:460px;text-align:center;position:relative;}
+.gate-box::before{content:'';position:absolute;inset:0;border-radius:6px;background:linear-gradient(135deg,rgba(139,26,42,.08),rgba(42,74,138,.08));pointer-events:none;}
+.gate-title{font-family:'Cinzel Decorative',serif;font-size:20px;color:var(--gold2);margin-bottom:4px;position:relative;}
+.gate-sub{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:28px;position:relative;}
+.gate-err{color:var(--crimson2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;min-height:18px;margin-bottom:8px;position:relative;}
+
+.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;position:relative;}
+.slot-card{border:1px solid var(--border);border-radius:4px;padding:16px 8px;cursor:pointer;transition:all .2s;background:var(--surface2);text-align:center;}
+.slot-card:hover{border-color:var(--gold);box-shadow:0 0 14px rgba(201,168,76,.2);}
+.slot-card.selected{border-color:var(--gold2);box-shadow:0 0 18px rgba(201,168,76,.3);}
+.slot-avi{font-size:26px;margin-bottom:6px;}
+.slot-uname{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;color:var(--text);}
+.slot-hint{font-size:9px;color:var(--muted);margin-top:3px;font-style:italic;}
+
+.gate-form{display:flex;flex-direction:column;gap:12px;position:relative;}
+.gate-inp{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:12px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:15px;outline:none;text-align:center;transition:border-color .2s;width:100%;}
+.gate-inp:focus{border-color:var(--gold);}
+.gate-inp::placeholder{color:var(--muted);font-style:italic;}
+
+.pin-display{display:flex;justify-content:center;gap:11px;margin:6px 0;}
+.pin-dot{width:13px;height:13px;border-radius:50%;border:1px solid var(--muted);background:transparent;transition:all .15s;}
+.pin-dot.on{background:var(--gold);border-color:var(--gold2);box-shadow:0 0 8px rgba(201,168,76,.5);}
+
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px;}
+.pkey{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:13px;color:var(--text);font-family:'Cinzel',serif;font-size:17px;cursor:pointer;transition:all .15s;user-select:none;}
+.pkey:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,168,76,.08);}
+.pkey:active{transform:scale(.93);}
+.pkey.del{font-size:12px;color:var(--muted);}
+
+.btn-primary{background:linear-gradient(135deg,var(--crimson),var(--navy2));border:1px solid var(--crimson2);border-radius:4px;color:var(--gold2);font-family:'Cinzel',serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;padding:13px;cursor:pointer;transition:all .2s;width:100%;}
+.btn-primary:hover{box-shadow:0 0 16px var(--glow-r);}
+.btn-link{background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:underline;transition:color .2s;}
+.btn-link:hover{color:var(--gold);}
+
+/* ── MAIN TABS ── */
+.tab-nav{display:flex;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:32px;background:var(--surface);}
+.tab-btn{flex:1;padding:13px 4px;background:transparent;border:none;border-right:1px solid var(--border);color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.07em;cursor:pointer;transition:all .3s;text-transform:uppercase;position:relative;overflow:hidden;}
+.tab-btn:last-child{border-right:none;}
+.tab-btn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;}
+.tab-btn.games::before   {background:linear-gradient(135deg,rgba(139,26,42,.3),transparent);}
+.tab-btn.shows::before   {background:linear-gradient(135deg,rgba(42,74,138,.3),transparent);}
+.tab-btn.books::before   {background:linear-gradient(135deg,rgba(201,168,76,.2),transparent);}
+.tab-btn.reviews::before {background:linear-gradient(135deg,rgba(107,63,160,.3),transparent);}
+.tab-btn.essays::before  {background:linear-gradient(135deg,rgba(42,154,94,.25),transparent);}
+.tab-btn.active::before{opacity:1;}
+.tab-btn.active{color:var(--gold2);}
+.tab-btn.active.games   {box-shadow:inset 0 -2px 0 var(--crimson2);}
+.tab-btn.active.shows   {box-shadow:inset 0 -2px 0 var(--sapphire);}
+.tab-btn.active.books   {box-shadow:inset 0 -2px 0 var(--gold);}
+.tab-btn.active.reviews {box-shadow:inset 0 -2px 0 var(--violet2);}
+.tab-btn.active.essays  {box-shadow:inset 0 -2px 0 var(--emerald2);}
+.tab-btn:hover:not(.active){color:var(--text);}
+.tab-icon{display:block;font-size:17px;margin-bottom:3px;}
+
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeIn .4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── PROGRESS BAR ── */
+.prog-wrap{margin-bottom:28px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 18px;}
+.prog-label{display:flex;justify-content:space-between;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--muted);margin-bottom:10px;text-transform:uppercase;}
+.prog-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:2px;transition:width .5s ease;}
+.games .prog-fill  {background:linear-gradient(90deg,var(--crimson),var(--crimson2));}
+.shows .prog-fill  {background:linear-gradient(90deg,var(--navy2),var(--sapphire));}
+.books .prog-fill  {background:linear-gradient(90deg,var(--gold),var(--gold2));}
+
+/* ── GENRE SECTIONS ── */
+.genre-section{margin-bottom:36px;}
+.genre-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.genre-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+.genre-line{flex:1;height:1px;}
+.games .genre-line  {background:linear-gradient(90deg,var(--crimson),transparent);}
+.shows .genre-line  {background:linear-gradient(90deg,var(--sapphire),transparent);}
+.books .genre-line  {background:linear-gradient(90deg,var(--gold),transparent);}
+
+/* ── ITEM CARDS ── */
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;}
+.item-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;transition:all .25s;position:relative;overflow:hidden;}
+.item-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+.games .item-card::before  {background:linear-gradient(180deg,var(--crimson2),var(--crimson));}
+.shows .item-card::before  {background:linear-gradient(180deg,var(--sapphire),var(--navy2));}
+.books .item-card::before  {background:linear-gradient(180deg,var(--gold2),var(--gold));}
+.item-card:hover{border-color:var(--muted);transform:translateY(-1px);}
+.games .item-card:hover{box-shadow:0 4px 20px var(--glow-r);}
+.shows .item-card:hover{box-shadow:0 4px 20px var(--glow-b);}
+.books .item-card:hover{box-shadow:0 4px 20px rgba(201,168,76,.2);}
+.item-card.done{opacity:.42;}
+.item-card.done .item-name{text-decoration:line-through;}
+
+.item-check{width:18px;height:18px;border:1px solid var(--muted);border-radius:2px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all .2s;font-size:11px;}
+.games .item-check:hover{border-color:var(--crimson2);background:rgba(139,26,42,.2);}
+.shows .item-check:hover{border-color:var(--sapphire);background:rgba(42,74,138,.2);}
+.books .item-check:hover{border-color:var(--gold);background:rgba(201,168,76,.15);}
+.item-card.done .item-check{background:var(--muted);border-color:var(--muted);color:var(--bg);}
+
+.item-body{flex:1;min-width:0;}
+.item-name{font-size:14px;color:var(--text);line-height:1.3;cursor:text;outline:none;border-bottom:1px dashed transparent;transition:border-color .2s;}
+.item-name:focus{border-color:var(--muted);}
+.item-meta{font-size:11px;color:var(--muted);margin-top:3px;font-style:italic;cursor:text;outline:none;}
+.item-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
+.games .tag{background:rgba(139,26,42,.25);color:var(--crimson2);border:1px solid rgba(139,26,42,.4);}
+.shows .tag{background:rgba(42,74,138,.25);color:#6a9fd8;border:1px solid rgba(42,74,138,.4);}
+.books .tag{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3);}
+.item-del{opacity:0;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0 0 0 4px;transition:all .2s;flex-shrink:0;}
+.item-card:hover .item-del{opacity:1;}
+.item-del:hover{color:var(--crimson2);}
+
+/* ── MEMBER PIPS ── */
+.member-pips{display:flex;gap:5px;margin-top:8px;align-items:center;}
+.pip{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .2s;position:relative;flex-shrink:0;}
+.pip[title]:hover::after{content:attr(title);position:absolute;bottom:26px;left:50%;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:3px 8px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--text);white-space:nowrap;pointer-events:none;z-index:10;}
+.pip.checked{border-color:var(--gold);background:rgba(201,168,76,.15);box-shadow:0 0 6px rgba(201,168,76,.3);}
+.pip.mine{cursor:pointer;}
+.pip.mine:hover{border-color:var(--gold2);transform:scale(1.1);}
+.pip.others{cursor:default;opacity:.6;}
+.pip-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-left:2px;}
+.item-card.team-done{border-color:var(--gold) !important;}
+.item-card.team-done::after{content:'⚜ Complete';position:absolute;top:8px;right:10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;}
+
+.add-row{margin-top:10px;display:flex;gap:8px;}
+.add-inp{flex:1;background:var(--surface);border:1px dashed var(--border);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:14px;outline:none;transition:border-color .2s;}
+.add-inp::placeholder{color:var(--muted);font-style:italic;}
+.games .add-inp:focus{border-color:var(--crimson);}
+.shows .add-inp:focus{border-color:var(--sapphire);}
+.books .add-inp:focus{border-color:var(--gold);}
+.add-meta{width:150px;background:var(--surface);border:1px dashed var(--border);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:13px;font-style:italic;outline:none;}
+.add-meta::placeholder{color:var(--muted);}
+.add-btn{background:none;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;padding:10px 14px;cursor:pointer;text-transform:uppercase;transition:all .2s;white-space:nowrap;}
+.games .add-btn:hover{border-color:var(--crimson2);color:var(--crimson2);}
+.shows .add-btn:hover{border-color:var(--sapphire);color:#6a9fd8;}
+.books .add-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ── REVIEWS ── */
+.reviews-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.reviews-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+.btn-new-review{background:none;border:1px solid var(--violet);border-radius:4px;color:var(--violet2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all .2s;}
+.btn-new-review:hover{background:rgba(107,63,160,.15);box-shadow:0 0 12px var(--glow-v);}
+
+.review-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden;transition:all .25s;}
+.review-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--violet2),var(--violet));}
+.review-card:hover{border-color:var(--muted);box-shadow:0 4px 20px var(--glow-v);}
+
+.review-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px;}
+.review-type-badge{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:rgba(107,63,160,.25);color:var(--violet2);border:1px solid rgba(107,63,160,.4);flex-shrink:0;margin-top:2px;}
+.review-subject{font-size:16px;color:var(--text);flex:1;line-height:1.3;}
+.review-author-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.review-author{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;}
+.review-date{font-size:10px;color:var(--muted);font-style:italic;}
+.review-stars{color:var(--gold);font-size:14px;letter-spacing:2px;}
+
+.review-body{font-size:14px;color:var(--text);line-height:1.7;opacity:.9;font-style:italic;border-top:1px solid var(--border);padding-top:12px;margin-top:4px;}
+.review-del{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;opacity:0;transition:all .2s;}
+.review-card:hover .review-del{opacity:1;}
+.review-del:hover{color:var(--crimson2);}
+
+/* Review form modal */
+.modal-overlay{position:fixed;inset:0;z-index:150;background:rgba(7,6,15,.9);display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:36px;width:100%;max-width:540px;position:relative;}
+.modal-box::before{content:'';position:absolute;inset:0;border-radius:6px;background:linear-gradient(135deg,rgba(107,63,160,.08),rgba(42,74,138,.06));pointer-events:none;}
+.modal-title{font-family:'Cinzel',serif;font-size:14px;letter-spacing:.18em;color:var(--gold2);text-transform:uppercase;margin-bottom:20px;position:relative;}
+.modal-form{display:flex;flex-direction:column;gap:12px;position:relative;}
+.modal-inp{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:11px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:14px;outline:none;transition:border-color .2s;width:100%;}
+.modal-inp:focus{border-color:var(--violet2);}
+.modal-inp::placeholder{color:var(--muted);font-style:italic;}
+.modal-sel{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:11px 14px;color:var(--text);font-family:'Cinzel',serif;font-size:12px;letter-spacing:.08em;outline:none;width:100%;cursor:pointer;}
+.modal-sel option{background:var(--surface2);}
+.modal-ta{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:11px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:14px;line-height:1.6;outline:none;resize:vertical;min-height:120px;width:100%;}
+.modal-ta:focus{border-color:var(--violet2);}
+.modal-ta::placeholder{color:var(--muted);font-style:italic;}
+.star-selector{display:flex;gap:6px;justify-content:center;padding:6px 0;}
+.star-btn{background:none;border:none;font-size:22px;cursor:pointer;color:var(--border);transition:all .15s;filter:grayscale(1);}
+.star-btn.lit{color:var(--gold);filter:none;}
+.star-btn:hover{transform:scale(1.2);}
+.modal-row{display:flex;gap:10px;}
+.modal-row .modal-inp{flex:1;}
+.modal-actions{display:flex;gap:10px;margin-top:6px;}
+.btn-cancel{flex:1;background:none;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:12px;cursor:pointer;transition:all .2s;}
+.btn-cancel:hover{border-color:var(--crimson2);color:var(--crimson2);}
+.btn-submit{flex:2;background:linear-gradient(135deg,var(--violet),var(--navy2));border:1px solid var(--violet2);border-radius:4px;color:var(--gold2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:12px;cursor:pointer;transition:all .2s;}
+.btn-submit:hover{box-shadow:0 0 16px var(--glow-v);}
+
+/* ── ESSAYS ── */
+.essays-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.essays-filters{display:flex;gap:6px;flex-wrap:wrap;}
+.filter-chip{background:none;border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.filter-chip.active,.filter-chip:hover{border-color:var(--emerald2);color:var(--emerald2);}
+.btn-new-essay{background:none;border:1px solid var(--emerald2);border-radius:4px;color:var(--emerald2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all .2s;}
+.btn-new-essay:hover{background:rgba(42,154,94,.12);box-shadow:0 0 12px var(--glow-g);}
+
+.essay-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:16px;position:relative;overflow:hidden;transition:all .25s;cursor:pointer;}
+.essay-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--emerald2),var(--emerald));}
+.essay-card:hover{border-color:var(--muted);box-shadow:0 4px 20px var(--glow-g);}
+.essay-preview{padding:20px 20px 16px;}
+.essay-meta-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.essay-type{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;flex-shrink:0;}
+.essay-type.original{background:rgba(42,154,94,.2);color:var(--emerald2);border:1px solid rgba(42,154,94,.35);}
+.essay-type.logged{background:rgba(42,74,138,.2);color:#6a9fd8;border:1px solid rgba(42,74,138,.35);}
+.essay-title-text{font-size:17px;color:var(--text);line-height:1.3;flex:1;}
+.essay-author-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.essay-author{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;color:var(--gold);}
+.essay-date{font-size:10px;color:var(--muted);font-style:italic;}
+.essay-excerpt{font-size:13px;color:var(--muted);line-height:1.6;font-style:italic;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;}
+.essay-footer{padding:10px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.essay-tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:rgba(42,154,94,.12);color:var(--emerald2);border:1px solid rgba(42,154,94,.25);}
+.essay-read-more{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+.essay-del{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;opacity:0;transition:all .2s;z-index:2;}
+.essay-card:hover .essay-del{opacity:1;}
+.essay-del:hover{color:var(--crimson2);}
+
+/* Essay full-read modal */
+.essay-full-body{font-size:15px;color:var(--text);line-height:1.85;max-height:60vh;overflow-y:auto;padding-right:8px;border-top:1px solid var(--border);padding-top:16px;margin-top:8px;white-space:pre-wrap;}
+.essay-ext-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:#6a9fd8;text-decoration:underline;margin-top:8px;display:block;}
+
+/* Modal essay form */
+.essay-mode-toggle{display:flex;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:4px;}
+.mode-btn{flex:1;background:none;border:none;padding:10px;color:var(--muted);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.mode-btn.active{background:rgba(42,154,94,.15);color:var(--emerald2);}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- ── GATE SCREEN ── -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-title">⚜ Retrograde Millennials</div>
+    <div class="gate-sub">Identify Thyself, Brother</div>
+    <div class="gate-err" id="gate-err"></div>
+
+    <!-- Step 1: pick a slot -->
+    <div id="step-slots">
+      <div class="slot-grid" id="slot-grid"></div>
+      <button class="btn-link" onclick="showRegister()">Register New Member</button>
+    </div>
+
+    <!-- Step 2: enter PIN -->
+    <div id="step-pin" style="display:none;">
+      <div style="font-family:'Cinzel',serif;font-size:12px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:16px;" id="pin-greeting"></div>
+      <div class="pin-display" id="pin-display"></div>
+      <div class="pin-pad" id="pin-pad"></div>
+      <div style="margin-top:16px;display:flex;gap:10px;">
+        <button class="btn-cancel" style="flex:1;" onclick="backToSlots()">← Back</button>
+        <button class="btn-primary" style="flex:2;" onclick="submitPin()">Enter</button>
+      </div>
+    </div>
+
+    <!-- Step 3: register -->
+    <div id="step-register" style="display:none;">
+      <div class="gate-form">
+        <input class="gate-inp" id="reg-username" placeholder="Choose a name, brother…" maxlength="20">
+        <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:-4px;">Set your 8-digit cipher</div>
+        <div class="pin-display" id="reg-pin-display"></div>
+        <div class="pin-pad" id="reg-pin-pad"></div>
+        <button class="btn-primary" onclick="submitRegister()">Swear the Oath</button>
+        <button class="btn-link" onclick="backToSlots()">← Return</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div class="wrapper" id="app" style="display:none;">
+  <header>
+    <div class="crest">⚜</div>
+    <h1>Retrograde Millennials Club</h1>
+    <p class="subtitle">Hosted by the Triality of Man</p>
+    <div class="header-rule"><span>✦</span></div>
+  </header>
+
+  <!-- User Bar -->
+  <div id="user-bar">
+    <div class="ub-left">
+      <div class="ub-avatar" id="ub-avatar">👤</div>
+      <div>
+        <div class="ub-name" id="ub-name">—</div>
+        <div class="ub-sub">Member of the Triality</div>
+      </div>
+    </div>
+    <button class="btn-ghost" onclick="lockApp()">⟵ Leave</button>
+  </div>
+
+  <!-- Tab Nav -->
+  <div class="tab-nav">
+    <button class="tab-btn games active" onclick="switchTab('games')">
+      <span class="tab-icon">⚔</span>Games
+    </button>
+    <button class="tab-btn shows" onclick="switchTab('shows')">
+      <span class="tab-icon">🜲</span>Shows
+    </button>
+    <button class="tab-btn books" onclick="switchTab('books')">
+      <span class="tab-icon">📜</span>Books
+    </button>
+    <button class="tab-btn reviews" onclick="switchTab('reviews')">
+      <span class="tab-icon">✦</span>Reviews
+    </button>
+    <button class="tab-btn essays" onclick="switchTab('essays')">
+      <span class="tab-icon">🖋</span>Essays
+    </button>
+  </div>
+
+  <!-- GAMES -->
+  <div id="panel-games" class="tab-panel games active">
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Quest Progress</span><span id="games-prog-lbl">0 / 0</span></div>
+      <div class="prog-track"><div class="prog-fill" id="games-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div id="games-genres"></div>
+  </div>
+
+  <!-- SHOWS -->
+  <div id="panel-shows" class="tab-panel shows">
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Viewing Chronicle</span><span id="shows-prog-lbl">0 / 0</span></div>
+      <div class="prog-track"><div class="prog-fill" id="shows-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div id="shows-genres"></div>
+  </div>
+
+  <!-- BOOKS -->
+  <div id="panel-books" class="tab-panel books">
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Tome Registry</span><span id="books-prog-lbl">0 / 0</span></div>
+      <div class="prog-track"><div class="prog-fill" id="books-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div id="books-genres"></div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div id="panel-reviews" class="tab-panel reviews">
+    <div class="reviews-header-row">
+      <span class="reviews-title">⟡ The Council's Judgments</span>
+      <button class="btn-new-review" onclick="openReviewModal()">+ New Review</button>
+    </div>
+    <div id="reviews-list"></div>
+    <div id="reviews-empty" style="text-align:center;padding:48px 0;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;display:none;">No judgments yet. Be the first to pass one.</div>
+  </div>
+
+  <!-- ESSAYS -->
+  <div id="panel-essays" class="tab-panel essays">
+    <div class="essays-header-row">
+      <div class="essays-filters">
+        <button class="filter-chip active" onclick="filterEssays('all',this)">All</button>
+        <button class="filter-chip" onclick="filterEssays('original',this)">Written</button>
+        <button class="filter-chip" onclick="filterEssays('logged',this)">Logged</button>
+      </div>
+      <button class="btn-new-essay" onclick="openEssayModal()">+ New Essay</button>
+    </div>
+    <div id="essays-list"></div>
+    <div id="essays-empty" style="text-align:center;padding:48px 0;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;display:none;">The archives await your first scroll.</div>
+  </div>
+</div>
+
+<!-- ── REVIEW MODAL ── -->
+<div id="review-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-title">✦ Pass Judgment</div>
+    <div class="modal-form">
+      <input class="modal-inp" id="rv-subject" placeholder="What are you reviewing?">
+      <div class="modal-row">
+        <select class="modal-sel" id="rv-type">
+          <option value="Game">Game</option>
+          <option value="Show">Show</option>
+          <option value="Book">Book</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;text-align:center;">Rating</div>
+      <div class="star-selector" id="star-selector">
+        <button class="star-btn" data-v="1" onclick="setStar(1)">★</button>
+        <button class="star-btn" data-v="2" onclick="setStar(2)">★</button>
+        <button class="star-btn" data-v="3" onclick="setStar(3)">★</button>
+        <button class="star-btn" data-v="4" onclick="setStar(4)">★</button>
+        <button class="star-btn" data-v="5" onclick="setStar(5)">★</button>
+      </div>
+      <textarea class="modal-ta" id="rv-body" placeholder="Your verdict… speak freely, brother."></textarea>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeReviewModal()">Cancel</button>
+        <button class="btn-submit" onclick="submitReview()">Submit Judgment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ESSAY MODAL (write/log) ── -->
+<div id="essay-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-title">🖋 Add to the Archives</div>
+    <div class="modal-form">
+      <div class="essay-mode-toggle">
+        <button class="mode-btn active" id="mode-write" onclick="setEssayMode('original')">✍ Write Original</button>
+        <button class="mode-btn" id="mode-log" onclick="setEssayMode('logged')">🔗 Log External</button>
+      </div>
+      <input class="modal-inp" id="es-title" placeholder="Title of the essay…">
+      <input class="modal-inp" id="es-topic" placeholder="Topic / genre tag…">
+      <div id="es-write-fields">
+        <textarea class="modal-ta" id="es-body" placeholder="Write your essay here… take your time." style="min-height:180px;"></textarea>
+      </div>
+      <div id="es-log-fields" style="display:none;">
+        <input class="modal-inp" id="es-author" placeholder="Original author…">
+        <input class="modal-inp" id="es-url" placeholder="Link / URL (optional)…">
+        <textarea class="modal-ta" id="es-notes" placeholder="Your notes or summary…" style="min-height:100px;"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeEssayModal()">Cancel</button>
+        <button class="btn-submit" style="background:linear-gradient(135deg,var(--emerald),var(--navy2));border-color:var(--emerald2);" onclick="submitEssay()">Seal & Archive</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ESSAY READ MODAL ── -->
+<div id="essay-read-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box" style="max-width:620px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px;">
+      <div class="modal-title" id="erm-title" style="margin-bottom:0;font-size:18px;"></div>
+      <button class="btn-cancel" style="padding:6px 14px;white-space:nowrap;" onclick="closeReadModal()">✕ Close</button>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+      <span class="essay-type" id="erm-type-badge"></span>
+      <span class="essay-author" id="erm-author"></span>
+      <span class="essay-date" id="erm-date"></span>
+    </div>
+    <div class="essay-full-body" id="erm-body"></div>
+    <a class="essay-ext-link" id="erm-link" href="#" target="_blank" style="display:none;"></a>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// STORAGE HELPERS
+// ─────────────────────────────────────────────────────────────
+const LS = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+
+// ─────────────────────────────────────────────────────────────
+// ACCOUNTS  (max 3 slots)
+// ─────────────────────────────────────────────────────────────
+const AVATARS = ['🗡','🛡','📖'];
+let accounts = LS.get('rmc_accounts') || [];
+let currentUser = null;
+let selectedSlot = null;
+let pinBuffer = '';
+let regPinBuffer = '';
+let essayFilter = 'all';
+
+function saveAccounts(){ LS.set('rmc_accounts', accounts); }
+
+function buildSlotGrid(){
+  const grid = document.getElementById('slot-grid');
+  grid.innerHTML = '';
+  // Show filled slots
+  accounts.forEach((acc, i) => {
+    const card = document.createElement('div');
+    card.className = 'slot-card';
+    card.innerHTML = `<div class="slot-avi">${AVATARS[i]}</div>
+      <div class="slot-uname">${acc.username}</div>
+      <div class="slot-hint">Enter Cipher</div>`;
+    card.onclick = () => selectSlot(i);
+    grid.appendChild(card);
+  });
+  // Empty slots
+  for(let i = accounts.length; i < 3; i++){
+    const card = document.createElement('div');
+    card.className = 'slot-card';
+    card.innerHTML = `<div class="slot-avi" style="opacity:.3;">⬚</div>
+      <div class="slot-uname" style="color:var(--muted);">Open Seat</div>
+      <div class="slot-hint">Unoccupied</div>`;
+    card.onclick = () => showRegister();
+    grid.appendChild(card);
+  }
+}
+
+function selectSlot(i){
+  selectedSlot = i;
+  pinBuffer = '';
+  document.getElementById('step-slots').style.display = 'none';
+  document.getElementById('step-pin').style.display = 'block';
+  document.getElementById('pin-greeting').textContent = `Welcome back, ${accounts[i].username}`;
+  buildPinPad('pin-pad', 'pin-display', false);
+  renderPinDisplay('pin-display', pinBuffer, 8);
+  document.getElementById('gate-err').textContent = '';
+}
+
+function backToSlots(){
+  document.getElementById('step-slots').style.display = 'block';
+  document.getElementById('step-pin').style.display = 'none';
+  document.getElementById('step-register').style.display = 'none';
+  document.getElementById('gate-err').textContent = '';
+  pinBuffer = '';
+  regPinBuffer = '';
+  buildSlotGrid();
+}
+
+function submitPin(){
+  const acc = accounts[selectedSlot];
+  if(pinBuffer === acc.pin){
+    loginAs(selectedSlot);
+  } else {
+    document.getElementById('gate-err').textContent = 'Cipher incorrect. Try again.';
+    pinBuffer = '';
+    renderPinDisplay('pin-display', pinBuffer, 8);
+  }
+}
+
+function showRegister(){
+  if(accounts.length >= 3){
+    document.getElementById('gate-err').textContent = 'The Triality is complete. No new seats.';
+    return;
+  }
+  regPinBuffer = '';
+  document.getElementById('step-slots').style.display = 'none';
+  document.getElementById('step-register').style.display = 'block';
+  buildPinPad('reg-pin-pad', 'reg-pin-display', true);
+  renderPinDisplay('reg-pin-display', regPinBuffer, 8);
+}
+
+function submitRegister(){
+  const uname = document.getElementById('reg-username').value.trim();
+  if(!uname){ document.getElementById('gate-err').textContent = 'Speak your name, brother.'; return; }
+  if(regPinBuffer.length !== 8){ document.getElementById('gate-err').textContent = 'Your cipher must be 8 digits.'; return; }
+  if(accounts.find(a => a.username.toLowerCase() === uname.toLowerCase())){
+    document.getElementById('gate-err').textContent = 'That name is already sworn.'; return;
+  }
+  accounts.push({ username: uname, pin: regPinBuffer });
+  saveAccounts();
+  loginAs(accounts.length - 1);
+}
+
+function loginAs(i){
+  currentUser = accounts[i];
+  currentUser.index = i;
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('ub-avatar').textContent = AVATARS[i];
+  document.getElementById('ub-name').textContent = currentUser.username;
+  initApp();
+}
+
+function lockApp(){
+  currentUser = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('gate').style.display = 'flex';
+  pinBuffer = '';
+  regPinBuffer = '';
+  backToSlots();
+}
+
+// PIN pad builder
+function buildPinPad(padId, displayId, isReg){
+  const pad = document.getElementById(padId);
+  pad.innerHTML = '';
+  const nums = [1,2,3,4,5,6,7,8,9,'',0,'⌫'];
+  nums.forEach(n => {
+    const btn = document.createElement('div');
+    btn.className = 'pkey' + (n === '⌫' ? ' del' : '');
+    btn.textContent = n === '' ? '' : n;
+    if(n !== '') btn.onclick = () => {
+      if(n === '⌫'){
+        if(isReg){ regPinBuffer = regPinBuffer.slice(0,-1); renderPinDisplay(displayId, regPinBuffer, 8); }
+        else { pinBuffer = pinBuffer.slice(0,-1); renderPinDisplay(displayId, pinBuffer, 8); }
+      } else {
+        if(isReg){ if(regPinBuffer.length < 8){ regPinBuffer += n; renderPinDisplay(displayId, regPinBuffer, 8); } }
+        else { if(pinBuffer.length < 8){ pinBuffer += n; renderPinDisplay(displayId, pinBuffer, 8); } }
+      }
+    };
+    pad.appendChild(btn);
+  });
+}
+
+function renderPinDisplay(id, buf, len){
+  const disp = document.getElementById(id);
+  disp.innerHTML = '';
+  for(let i = 0; i < len; i++){
+    const dot = document.createElement('div');
+    dot.className = 'pin-dot' + (i < buf.length ? ' on' : '');
+    disp.appendChild(dot);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// QUEUE DATA
+// ─────────────────────────────────────────────────────────────
+const DATA = {
+  games:[
+    { genre:"RPG — Classic & Tactical", items:[
+      { name:"Final Fantasy I",                      meta:"NES / GBA · 1987",  tags:["Turn-Based","Classic"] },
+      { name:"Final Fantasy II",                     meta:"NES / GBA · 1988",  tags:["Turn-Based","Classic"] },
+      { name:"Final Fantasy III",                    meta:"NES / DS · 1990",   tags:["Turn-Based","Classic"] },
+      { name:"Final Fantasy Tactics",                meta:"PS1 · 1997",        tags:["Tactical","Strategy"] },
+      { name:"Golden Sun",                           meta:"GBA · 2001",        tags:["Turn-Based","Puzzle"] },
+      { name:"Golden Sun: The Lost Age",             meta:"GBA · 2002",        tags:["Turn-Based","Sequel"] },
+      { name:"Chrono Trigger",                       meta:"SNES · 1995",       tags:["Turn-Based","Time Travel"] },
+      { name:"Secret of Mana",                       meta:"SNES · 1993",       tags:["Action RPG","Co-op"] },
+      { name:"Breath of Fire II",                    meta:"SNES · 1994",       tags:["Turn-Based","Dragon"] },
+      { name:"Tactics Ogre",                         meta:"PS1 · 1995",        tags:["Tactical","Strategy"] },
+      { name:"Fire Emblem: Shadow Dragon",           meta:"Famicom · 1990",    tags:["SRPG","Classic"] },
+      { name:"Fire Emblem: Gaiden",                  meta:"Famicom · 1992",    tags:["SRPG","Exploration"] },
+      { name:"Fire Emblem: Mystery of the Emblem",   meta:"SNES · 1994",       tags:["SRPG","Classic"] },
+    ]},
+    { genre:"Platformer", items:[
+      { name:"Yoshi's Island",         meta:"SNES · 1995",      tags:["Platformer","Nintendo"] },
+      { name:"Kirby Tilt 'n' Tumble",  meta:"GBC · 2000",       tags:["Platformer","Unique"] },
+      { name:"Super Mario World",      meta:"SNES · 1990",      tags:["Platformer","Classic"] },
+      { name:"Donkey Kong Country",    meta:"SNES · 1994–1996", tags:["Platformer","Trilogy"] },
+      { name:"Kirby's Adventure",      meta:"NES · 1993",       tags:["Platformer","Kirby"] },
+    ]},
+    { genre:"Creature & Monster", items:[
+      { name:"Pokémon Red / Blue",       meta:"GB · 1996",   tags:["Gen I","Original"] },
+      { name:"Pokémon Gold / Silver",    meta:"GBC · 1999",  tags:["Gen II","Johto"] },
+      { name:"Pokémon Ruby / Sapphire",  meta:"GBA · 2002",  tags:["Gen III","Hoenn"] },
+      { name:"Dragon Warrior Monsters",  meta:"GBC · 1998",  tags:["Monster Taming","RPG"] },
+      { name:"Digimon World",            meta:"PS1 · 1999",  tags:["Monster Raising","Sim"] },
+    ]},
+  ],
+  shows:[
+    { genre:"Dark Fantasy & Epic", items:[
+      { name:"Berserk",              meta:"1997 · 25 eps",       tags:["Dark Fantasy","Manga"] },
+      { name:"Record of Lodoss War", meta:"OVA 1990 · 13 eps",   tags:["High Fantasy","Classic"] },
+      { name:"Claymore",             meta:"2007 · 26 eps",       tags:["Dark Fantasy","Action"] },
+      { name:"Rurouni Kenshin",      meta:"1996 · 94 eps",       tags:["Samurai","Historical"] },
+      { name:"Slayers",              meta:"1995 · Multi-season", tags:["Fantasy","Comedy"] },
+    ]},
+    { genre:"Long-Form Adventure", items:[
+      { name:"Inuyasha",                   meta:"2000 · 167 eps", tags:["Feudal Japan","Supernatural"] },
+      { name:"Avatar: The Last Airbender", meta:"2005 · 3 Books", tags:["Action","Western Anime"] },
+      { name:"Yu Yu Hakusho",              meta:"1992 · 112 eps", tags:["Supernatural","Tournament"] },
+      { name:"Flame of Recca",             meta:"1997 · 42 eps",  tags:["Ninja","Tournament"] },
+    ]},
+    { genre:"Psychological & Thriller", items:[
+      { name:"Monster",                     meta:"2004 · 74 eps", tags:["Psychological","Crime"] },
+      { name:"Paranoia Agent",              meta:"2004 · 13 eps", tags:["Psychological","Satoshi Kon"] },
+      { name:"Serial Experiments Lain",     meta:"1998 · 13 eps", tags:["Cyberpunk","Existential"] },
+      { name:"Now and Then, Here and There",meta:"1999 · 13 eps", tags:["Dark","Dystopian"] },
+    ]},
+  ],
+  books:[
+    { genre:"Epic Fantasy", items:[
+      { name:"The Name of the Wind",  meta:"Patrick Rothfuss · 2007",  tags:["Fantasy","Magic"] },
+      { name:"The Hobbit",            meta:"J.R.R. Tolkien · 1937",    tags:["High Fantasy","Classic"] },
+      { name:"The Way of Kings",      meta:"Brandon Sanderson · 2010", tags:["Epic","Cosmere"] },
+    ]},
+    { genre:"Science Fiction", items:[
+      { name:"Ender's Game",  meta:"Orson Scott Card · 1985",  tags:["Sci-Fi","Military"] },
+      { name:"Dune",          meta:"Frank Herbert · 1965",     tags:["Sci-Fi","Politics"] },
+      { name:"Snow Crash",    meta:"Neal Stephenson · 1992",   tags:["Cyberpunk","Satire"] },
+    ]},
+    { genre:"Modern Fantasy", items:[
+      { name:"Mistborn: The Final Empire", meta:"Brandon Sanderson · 2006", tags:["Fantasy","Heist"] },
+    ]},
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────
+// QUEUE STATE  —  per-user tracking
+// queueState[tab][key] = { "username": true, ... }
+// An item is "team done" only when ALL registered members have checked it.
+// ─────────────────────────────────────────────────────────────
+let queueState = LS.get('rmc_queue2') || {};
+function saveQueue(){ LS.set('rmc_queue2', queueState); }
+
+function getItemVotes(tab, key){
+  return (queueState[tab] && queueState[tab][key]) ? queueState[tab][key] : {};
+}
+
+function isTeamDone(tab, key){
+  if(!accounts.length) return false;
+  const votes = getItemVotes(tab, key);
+  return accounts.every(a => votes[a.username]);
+}
+
+function myVote(tab, key){
+  const votes = getItemVotes(tab, key);
+  return !!(currentUser && votes[currentUser.username]);
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER QUEUE PANELS
+// ─────────────────────────────────────────────────────────────
+function renderPanel(tab){
+  const cont = document.getElementById(`${tab}-genres`);
+  cont.innerHTML = '';
+  DATA[tab].forEach((sec, si) => {
+    const s = document.createElement('div');
+    s.className = 'genre-section';
+    s.innerHTML = `
+      <div class="genre-header">
+        <span class="genre-title">${sec.genre}</span>
+        <div class="genre-line"></div>
+      </div>
+      <div class="items-grid" id="grid-${tab}-${si}"></div>
+      <div class="add-row">
+        <input class="add-inp" id="ai-${tab}-${si}" placeholder="Add a title…">
+        <input class="add-meta" id="am-${tab}-${si}" placeholder="Platform · Year">
+        <button class="add-btn" onclick="addItem('${tab}',${si})">+ Enlist</button>
+      </div>`;
+    cont.appendChild(s);
+    sec.items.forEach((_, ii) => renderCard(tab, si, ii));
+  });
+  updateProgress(tab);
+}
+
+function renderCard(tab, si, ii){
+  const item  = DATA[tab][si].items[ii];
+  const key   = `${tab}_${si}_${ii}`;
+  const votes = getItemVotes(tab, key);
+  const teamDone = isTeamDone(tab, key);
+  const iMine    = myVote(tab, key);
+  const grid  = document.getElementById(`grid-${tab}-${si}`);
+  const ex    = document.getElementById(`card-${key}`);
+  if(ex) ex.remove();
+
+  const card = document.createElement('div');
+  card.className = `item-card${teamDone ? ' done team-done' : ''}`;
+  card.id = `card-${key}`;
+
+  const tags = (item.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+
+  // Build pip row — one pip per registered member
+  const pipHTML = accounts.map((acc, ai) => {
+    const checked = !!votes[acc.username];
+    const isMe    = currentUser && acc.username === currentUser.username;
+    const cls     = `pip ${checked ? 'checked' : ''} ${isMe ? 'mine' : 'others'}`;
+    const click   = isMe && !teamDone ? `onclick="toggleDone('${tab}',${si},${ii})"` : '';
+    const tip     = checked ? `${acc.username} ✓` : (isMe ? `Mark as done` : `${acc.username} — pending`);
+    return `<div class="${cls}" title="${tip}" ${click}>${AVATARS[ai]}</div>`;
+  }).join('');
+
+  const pipsSection = accounts.length
+    ? `<div class="member-pips">${pipHTML}<span class="pip-label">${teamDone ? 'All done!' : `${Object.keys(votes).length}/${accounts.length}`}</span></div>`
+    : '';
+
+  // Main checkbox: only clickable by current user if not team done
+  const checkClick = !teamDone ? `onclick="toggleDone('${tab}',${si},${ii})"` : '';
+  const checkMark  = iMine ? (teamDone ? '⚔' : '✓') : '';
+
+  card.innerHTML = `
+    <div class="item-check ${!teamDone ? '' : 'checked'}" ${checkClick} style="${teamDone?'background:var(--gold);border-color:var(--gold2);color:var(--bg);':''}">
+      ${teamDone ? '⚔' : (iMine ? '✓' : '')}
+    </div>
+    <div class="item-body">
+      <div class="item-name" contenteditable="true"
+           onblur="DATA['${tab}'][${si}].items[${ii}].name=this.innerText.trim()">${item.name}</div>
+      <div class="item-meta" contenteditable="true"
+           onblur="DATA['${tab}'][${si}].items[${ii}].meta=this.innerText.trim()">${item.meta}</div>
+      <div class="item-tags">${tags}</div>
+      ${pipsSection}
+    </div>
+    <button class="item-del" onclick="deleteItem('${tab}',${si},${ii})">✕</button>`;
+  grid.appendChild(card);
+}
+
+function toggleDone(tab, si, ii){
+  if(!currentUser) return;
+  const key = `${tab}_${si}_${ii}`;
+  if(isTeamDone(tab, key)) return; // locked once all done
+  if(!queueState[tab]) queueState[tab] = {};
+  if(!queueState[tab][key]) queueState[tab][key] = {};
+  // Toggle current user's own vote
+  if(queueState[tab][key][currentUser.username]){
+    delete queueState[tab][key][currentUser.username];
+  } else {
+    queueState[tab][key][currentUser.username] = true;
+  }
+  saveQueue();
+  renderCard(tab, si, ii);
+  updateProgress(tab);
+}
+
+function deleteItem(tab, si, ii){
+  DATA[tab][si].items.splice(ii,1);
+  const grid = document.getElementById(`grid-${tab}-${si}`);
+  grid.innerHTML = '';
+  DATA[tab][si].items.forEach((_,i) => renderCard(tab,si,i));
+  updateProgress(tab);
+}
+
+function addItem(tab, si){
+  const n = document.getElementById(`ai-${tab}-${si}`).value.trim();
+  if(!n) return;
+  DATA[tab][si].items.push({ name:n, meta:document.getElementById(`am-${tab}-${si}`).value.trim(), tags:[] });
+  renderCard(tab, si, DATA[tab][si].items.length-1);
+  document.getElementById(`ai-${tab}-${si}`).value = '';
+  document.getElementById(`am-${tab}-${si}`).value = '';
+  updateProgress(tab);
+}
+
+function updateProgress(tab){
+  let total=0, done=0;
+  DATA[tab].forEach((sec,si) => sec.items.forEach((_,ii) => {
+    total++;
+    if(isTeamDone(tab, `${tab}_${si}_${ii}`)) done++;
+  }));
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById(`${tab}-prog-lbl`).textContent = `${done} / ${total} Completed`;
+  document.getElementById(`${tab}-prog-fill`).style.width = pct+'%';
+}
+
+// ─────────────────────────────────────────────────────────────
+// REVIEWS
+// ─────────────────────────────────────────────────────────────
+let reviews = LS.get('rmc_reviews') || [];
+let currentStars = 0;
+
+function saveReviews(){ LS.set('rmc_reviews', reviews); }
+
+function renderReviews(){
+  const list = document.getElementById('reviews-list');
+  const empty = document.getElementById('reviews-empty');
+  list.innerHTML = '';
+  if(!reviews.length){ empty.style.display='block'; return; }
+  empty.style.display='none';
+  [...reviews].reverse().forEach((rv, ridx) => {
+    const actualIdx = reviews.length - 1 - ridx;
+    const stars = '★'.repeat(rv.stars) + '☆'.repeat(5-rv.stars);
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = `
+      <div class="review-top">
+        <span class="review-type-badge">${rv.type}</span>
+        <div class="review-subject">${rv.subject}</div>
+      </div>
+      <div class="review-author-row">
+        <span class="review-author">${rv.author}</span>
+        <span class="review-date">${rv.date}</span>
+        <span class="review-stars">${stars}</span>
+      </div>
+      <div class="review-body">${rv.body}</div>
+      <button class="review-del" onclick="deleteReview(${actualIdx})">✕</button>`;
+    list.appendChild(card);
+  });
+}
+
+function openReviewModal(){
+  document.getElementById('rv-subject').value = '';
+  document.getElementById('rv-body').value = '';
+  currentStars = 0;
+  setStar(0);
+  document.getElementById('review-modal').style.display = 'flex';
+}
+function closeReviewModal(){ document.getElementById('review-modal').style.display = 'none'; }
+
+function setStar(n){
+  currentStars = n;
+  document.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('lit', parseInt(b.dataset.v) <= n);
+  });
+}
+
+function submitReview(){
+  const subj = document.getElementById('rv-subject').value.trim();
+  const body = document.getElementById('rv-body').value.trim();
+  if(!subj || !body){ return; }
+  reviews.push({
+    subject: subj,
+    type: document.getElementById('rv-type').value,
+    stars: currentStars,
+    body,
+    author: currentUser.username,
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  });
+  saveReviews();
+  closeReviewModal();
+  renderReviews();
+}
+
+function deleteReview(i){
+  reviews.splice(i,1);
+  saveReviews();
+  renderReviews();
+}
+
+// ─────────────────────────────────────────────────────────────
+// ESSAYS
+// ─────────────────────────────────────────────────────────────
+let essays = LS.get('rmc_essays') || [];
+let essayMode = 'original';
+
+function saveEssays(){ LS.set('rmc_essays', essays); }
+
+function renderEssays(){
+  const list = document.getElementById('essays-list');
+  const empty = document.getElementById('essays-empty');
+  list.innerHTML = '';
+  const filtered = essayFilter === 'all' ? essays : essays.filter(e => e.kind === essayFilter);
+  if(!filtered.length){ empty.style.display='block'; return; }
+  empty.style.display='none';
+  [...filtered].reverse().forEach((es) => {
+    const actualIdx = essays.indexOf(es);
+    const excerpt = (es.body||es.notes||'').slice(0,180) + ((es.body||es.notes||'').length>180?'…':'');
+    const card = document.createElement('div');
+    card.className = 'essay-card';
+    card.innerHTML = `
+      <div class="essay-preview">
+        <div class="essay-meta-row">
+          <span class="essay-type ${es.kind}">${es.kind==='original'?'Original':'Logged'}</span>
+          <div class="essay-title-text">${es.title}</div>
+        </div>
+        <div class="essay-author-row">
+          <span class="essay-author">${es.author}</span>
+          <span class="essay-date">${es.date}</span>
+        </div>
+        <div class="essay-excerpt">${excerpt}</div>
+      </div>
+      <div class="essay-footer">
+        <span class="essay-tag">${es.topic||'Essay'}</span>
+        <span class="essay-read-more">Read Scroll →</span>
+      </div>
+      <button class="essay-del" onclick="event.stopPropagation();deleteEssay(${actualIdx})">✕</button>`;
+    card.onclick = () => openReadModal(actualIdx);
+    list.appendChild(card);
+  });
+}
+
+function filterEssays(f, el){
+  essayFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderEssays();
+}
+
+function openEssayModal(){
+  document.getElementById('es-title').value='';
+  document.getElementById('es-topic').value='';
+  document.getElementById('es-body').value='';
+  document.getElementById('es-author').value='';
+  document.getElementById('es-url').value='';
+  document.getElementById('es-notes').value='';
+  setEssayMode('original');
+  document.getElementById('essay-modal').style.display='flex';
+}
+function closeEssayModal(){ document.getElementById('essay-modal').style.display='none'; }
+
+function setEssayMode(m){
+  essayMode = m;
+  document.getElementById('mode-write').classList.toggle('active', m==='original');
+  document.getElementById('mode-log').classList.toggle('active', m==='logged');
+  document.getElementById('es-write-fields').style.display = m==='original'?'block':'none';
+  document.getElementById('es-log-fields').style.display  = m==='logged'?'flex':'none';
+  document.getElementById('es-log-fields').style.flexDirection='column';
+  document.getElementById('es-log-fields').style.gap='12px';
+}
+
+function submitEssay(){
+  const title = document.getElementById('es-title').value.trim();
+  if(!title) return;
+  const essay = {
+    kind: essayMode,
+    title,
+    topic: document.getElementById('es-topic').value.trim(),
+    author: essayMode==='original' ? currentUser.username : (document.getElementById('es-author').value.trim()||'Unknown'),
+    body: essayMode==='original' ? document.getElementById('es-body').value.trim() : '',
+    notes: essayMode==='logged'  ? document.getElementById('es-notes').value.trim() : '',
+    url:  essayMode==='logged'   ? document.getElementById('es-url').value.trim()  : '',
+    contributor: currentUser.username,
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  };
+  essays.push(essay);
+  saveEssays();
+  closeEssayModal();
+  renderEssays();
+}
+
+function deleteEssay(i){
+  essays.splice(i,1);
+  saveEssays();
+  renderEssays();
+}
+
+function openReadModal(i){
+  const es = essays[i];
+  document.getElementById('erm-title').textContent = es.title;
+  document.getElementById('erm-type-badge').textContent = es.kind==='original'?'Original':'Logged';
+  document.getElementById('erm-type-badge').className = `essay-type ${es.kind}`;
+  document.getElementById('erm-author').textContent = es.author;
+  document.getElementById('erm-date').textContent = es.date;
+  const bodyEl = document.getElementById('erm-body');
+  bodyEl.textContent = es.kind==='original' ? (es.body||'') : (es.notes||'No notes provided.');
+  const linkEl = document.getElementById('erm-link');
+  if(es.url){ linkEl.href=es.url; linkEl.textContent='→ Read original source'; linkEl.style.display='block'; }
+  else { linkEl.style.display='none'; }
+  document.getElementById('essay-read-modal').style.display='flex';
+}
+function closeReadModal(){ document.getElementById('essay-read-modal').style.display='none'; }
+
+// ─────────────────────────────────────────────────────────────
+// TAB SWITCH
+// ─────────────────────────────────────────────────────────────
+function switchTab(tab){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`panel-${tab}`).classList.add('active');
+  document.querySelector(`.tab-btn.${tab}`).classList.add('active');
+}
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+function initApp(){
+  renderPanel('games');
+  renderPanel('shows');
+  renderPanel('books');
+  renderReviews();
+  renderEssays();
+}
+
+// Boot gate
+buildSlotGrid();
+</script>
+</body>
+</html>
