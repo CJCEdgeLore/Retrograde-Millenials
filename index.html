@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retrograde Millennials Club</title>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"></noscript>
+<style>
+:root {
+  --bg:#07060f; --surface:#0e0c1a; --surface2:#130f22; --border:#2a1f3d;
+  --crimson:#8b1a2a; --crimson2:#c0293e;
+  --gold:#c9a84c; --gold2:#f0d080;
+  --navy:#0f1b3d; --navy2:#1a2d5a; --sapphire:#2a4a8a;
+  --violet:#6b3fa0; --violet2:#a07fd8;
+  --emerald:#1a5c3a; --emerald2:#2a9a5e;
+  --text:#e8dfc8; --muted:#7a6d8a;
+  --glow-r:rgba(139,26,42,0.35); --glow-b:rgba(42,74,138,0.35);
+  --glow-v:rgba(107,63,160,0.35); --glow-g:rgba(42,154,94,0.3);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IM Fell English',Georgia,serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(ellipse 60% 50% at 15% 20%,rgba(139,26,42,.18) 0%,transparent 70%),
+  radial-gradient(ellipse 60% 50% at 85% 70%,rgba(42,74,138,.18) 0%,transparent 70%),
+  radial-gradient(ellipse 40% 30% at 50% 50%,rgba(20,10,40,.5) 0%,transparent 100%);
+  pointer-events:none;z-index:0;}
+/* SVG noise filter removed — GPU-expensive on iOS Safari */
+
+.wrapper{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:40px 24px 100px;}
+
+/* ── HEADER ── */
+header{text-align:center;margin-bottom:32px;}
+.crest{font-size:36px;margin-bottom:10px;filter:drop-shadow(0 0 12px var(--crimson2));animation:breathe 4s ease-in-out infinite;}
+@keyframes breathe{
+  0%,100%{filter:drop-shadow(0 0 12px var(--crimson2));}
+  50%{filter:drop-shadow(0 0 28px var(--sapphire)) drop-shadow(0 0 10px var(--gold));}
+}
+h1{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,5vw,46px);font-weight:900;letter-spacing:.05em;
+  background:linear-gradient(135deg,var(--crimson2) 0%,var(--gold2) 45%,var(--sapphire) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;}
+.subtitle{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.28em;color:var(--muted);margin-top:10px;text-transform:uppercase;font-style:italic;}
+.header-rule{display:flex;align-items:center;gap:12px;margin-top:18px;}
+.header-rule::before,.header-rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--crimson),var(--sapphire),transparent);}
+.header-rule span{color:var(--gold);font-size:15px;}
+
+/* ── USER BAR ── */
+#user-bar{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;}
+.ub-left{flex:1;display:flex;align-items:center;gap:10px;}
+.ub-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:1px solid var(--border);background:var(--surface2);}
+.ub-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.1em;color:var(--gold2);}
+.ub-sub{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-top:1px;}
+.btn-ghost{background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.btn-ghost:hover{border-color:var(--crimson2);color:var(--crimson2);}
+
+/* ── MEMBERS PANEL ── */
+#members-panel{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:16px 18px;margin-bottom:20px;}
+.members-panel-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.members-panel-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+.members-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.member-card{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:14px 12px;text-align:center;position:relative;transition:border-color .2s;}
+.member-card.is-me{border-color:var(--gold);box-shadow:0 0 10px rgba(201,168,76,.15);}
+.member-card.empty{opacity:.4;}
+.mc-avatar{font-size:22px;margin-bottom:6px;}
+.mc-name{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.1em;color:var(--text);margin-bottom:8px;word-break:break-all;}
+.mc-you{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;position:absolute;top:6px;right:8px;}
+.mc-stats{display:flex;flex-direction:column;gap:4px;}
+.mc-stat{display:flex;justify-content:space-between;align-items:center;font-size:10px;}
+.mc-stat-label{font-family:'Cinzel',serif;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;font-size:9px;}
+.mc-stat-val{font-family:'Cinzel',serif;font-size:11px;color:var(--text);}
+.mc-stat-val.s1{color:#6a9fd8;}
+.mc-stat-val.s2{color:#d08030;}
+.mc-stat-val.s3{color:var(--gold2);}
+.mc-divider{height:1px;background:var(--border);margin:6px 0;}
+
+/* ── GATE ── */
+#gate{position:fixed;inset:0;z-index:200;background:rgba(7,6,15,.97);display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease;-webkit-transform:translateZ(0);transform:translateZ(0);}
+.gate-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:40px 36px;width:100%;max-width:460px;text-align:center;position:relative;}
+.gate-box::before{content:'';position:absolute;inset:0;border-radius:6px;background:linear-gradient(135deg,rgba(139,26,42,.08),rgba(42,74,138,.08));pointer-events:none;}
+.gate-title{font-family:'Cinzel Decorative',serif;font-size:20px;color:var(--gold2);margin-bottom:4px;position:relative;}
+.gate-sub{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:28px;position:relative;}
+.gate-err{color:var(--crimson2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;min-height:18px;margin-bottom:8px;position:relative;}
+
+.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;position:relative;}
+.slot-card{border:1px solid var(--border);border-radius:4px;padding:16px 8px;cursor:pointer;transition:all .2s;background:var(--surface2);text-align:center;}
+.slot-card:hover{border-color:var(--gold);box-shadow:0 0 14px rgba(201,168,76,.2);}
+.slot-card.selected{border-color:var(--gold2);box-shadow:0 0 18px rgba(201,168,76,.3);}
+.slot-avi{font-size:26px;margin-bottom:6px;}
+.slot-uname{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;color:var(--text);}
+.slot-hint{font-size:9px;color:var(--muted);margin-top:3px;font-style:italic;}
+
+.gate-form{display:flex;flex-direction:column;gap:12px;position:relative;}
+.gate-inp{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:12px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:15px;outline:none;text-align:center;transition:border-color .2s;width:100%;}
+.gate-inp:focus{border-color:var(--gold);}
+.gate-inp::placeholder{color:var(--muted);font-style:italic;}
+
+.pin-display{display:flex;justify-content:center;gap:11px;margin:6px 0;}
+.pin-dot{width:13px;height:13px;border-radius:50%;border:1px solid var(--muted);background:transparent;transition:all .15s;}
+.pin-dot.on{background:var(--gold);border-color:var(--gold2);box-shadow:0 0 8px rgba(201,168,76,.5);}
+
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px;}
+.pkey{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:13px;color:var(--text);font-family:'Cinzel',serif;font-size:17px;cursor:pointer;transition:all .15s;user-select:none;}
+.pkey:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,168,76,.08);}
+.pkey:active{transform:scale(.93);}
+.pkey.del{font-size:12px;color:var(--muted);}
+
+.btn-primary{background:linear-gradient(135deg,var(--crimson),var(--navy2));border:1px solid var(--crimson2);border-radius:4px;color:var(--gold2);font-family:'Cinzel',serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;padding:13px;cursor:pointer;transition:all .2s;width:100%;}
+.btn-primary:hover{box-shadow:0 0 16px var(--glow-r);}
+.btn-link{background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:underline;transition:color .2s;}
+.btn-link:hover{color:var(--gold);}
+
+/* ── MAIN TABS ── */
+.tab-nav{display:flex;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:32px;background:var(--surface);}
+.tab-btn{flex:1;padding:13px 4px;background:transparent;border:none;border-right:1px solid var(--border);color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.07em;cursor:pointer;transition:all .3s;text-transform:uppercase;position:relative;overflow:hidden;}
+.tab-btn:last-child{border-right:none;}
+.tab-btn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;}
+.tab-btn.games::before   {background:linear-gradient(135deg,rgba(139,26,42,.3),transparent);}
+.tab-btn.shows::before   {background:linear-gradient(135deg,rgba(42,74,138,.3),transparent);}
+.tab-btn.books::before   {background:linear-gradient(135deg,rgba(201,168,76,.2),transparent);}
+.tab-btn.reviews::before {background:linear-gradient(135deg,rgba(107,63,160,.3),transparent);}
+.tab-btn.essays::before  {background:linear-gradient(135deg,rgba(42,154,94,.25),transparent);}
+.tab-btn.active::before{opacity:1;}
+.tab-btn.active{color:var(--gold2);}
+.tab-btn.active.games   {box-shadow:inset 0 -2px 0 var(--crimson2);}
+.tab-btn.active.shows   {box-shadow:inset 0 -2px 0 var(--sapphire);}
+.tab-btn.active.books   {box-shadow:inset 0 -2px 0 var(--gold);}
+.tab-btn.active.reviews {box-shadow:inset 0 -2px 0 var(--violet2);}
+.tab-btn.active.essays  {box-shadow:inset 0 -2px 0 var(--emerald2);}
+.tab-btn:hover:not(.active){color:var(--text);}
+.tab-icon{display:block;font-size:17px;margin-bottom:3px;}
+
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeIn .4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── PROGRESS BAR ── */
+.prog-wrap{margin-bottom:28px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 18px;}
+.prog-label{display:flex;justify-content:space-between;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--muted);margin-bottom:10px;text-transform:uppercase;}
+.prog-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:2px;transition:width .5s ease;}
+.games .prog-fill  {background:linear-gradient(90deg,var(--crimson),var(--crimson2));}
+.shows .prog-fill  {background:linear-gradient(90deg,var(--navy2),var(--sapphire));}
+.books .prog-fill  {background:linear-gradient(90deg,var(--gold),var(--gold2));}
+
+/* ── GENRE SECTIONS ── */
+.genre-section{margin-bottom:36px;}
+.genre-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.genre-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+.genre-line{flex:1;height:1px;}
+.games .genre-line  {background:linear-gradient(90deg,var(--crimson),transparent);}
+.shows .genre-line  {background:linear-gradient(90deg,var(--sapphire),transparent);}
+.books .genre-line  {background:linear-gradient(90deg,var(--gold),transparent);}
+
+/* ── ITEM CARDS ── */
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;}
+.item-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;transition:all .25s;position:relative;overflow:hidden;}
+.item-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+.games .item-card::before  {background:linear-gradient(180deg,var(--crimson2),var(--crimson));}
+.shows .item-card::before  {background:linear-gradient(180deg,var(--sapphire),var(--navy2));}
+.books .item-card::before  {background:linear-gradient(180deg,var(--gold2),var(--gold));}
+.item-card:hover{border-color:var(--muted);transform:translateY(-1px);}
+.games .item-card:hover{box-shadow:0 4px 20px var(--glow-r);}
+.shows .item-card:hover{box-shadow:0 4px 20px var(--glow-b);}
+.books .item-card:hover{box-shadow:0 4px 20px rgba(201,168,76,.2);}
+.item-card.done{opacity:.42;}
+.item-card.done .item-name{text-decoration:line-through;}
+
+.item-check{width:18px;height:18px;border:1px solid var(--muted);border-radius:2px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all .2s;font-size:11px;}
+.games .item-check:hover{border-color:var(--crimson2);background:rgba(139,26,42,.2);}
+.shows .item-check:hover{border-color:var(--sapphire);background:rgba(42,74,138,.2);}
+.books .item-check:hover{border-color:var(--gold);background:rgba(201,168,76,.15);}
+.item-card.done .item-check{background:var(--muted);border-color:var(--muted);color:var(--bg);}
+
+.item-body{flex:1;min-width:0;}
+.item-name{font-size:14px;color:var(--text);line-height:1.3;cursor:text;outline:none;border-bottom:1px dashed transparent;transition:border-color .2s;}
+.item-name:focus{border-color:var(--muted);}
+.item-meta{font-size:11px;color:var(--muted);margin-top:3px;font-style:italic;cursor:text;outline:none;}
+.item-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
+.games .tag{background:rgba(139,26,42,.25);color:var(--crimson2);border:1px solid rgba(139,26,42,.4);}
+.shows .tag{background:rgba(42,74,138,.25);color:#6a9fd8;border:1px solid rgba(42,74,138,.4);}
+.books .tag{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3);}
+.item-del{opacity:0;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0 0 0 4px;transition:all .2s;flex-shrink:0;}
+.item-card:hover .item-del{opacity:1;}
+.item-del:hover{color:var(--crimson2);}
+
+/* ── MEMBER PIPS — 4 states: 0=none 1=started 2=paused 3=done ── */
+.member-pips{display:flex;gap:5px;margin-top:8px;align-items:center;flex-wrap:wrap;}
+.pip{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s;position:relative;flex-shrink:0;}
+.pip[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:28px;left:50%;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:3px 8px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--text);white-space:nowrap;pointer-events:none;z-index:10;}
+.pip.s1{border-color:var(--sapphire);background:rgba(42,74,138,.25);box-shadow:0 0 6px rgba(42,74,138,.3);}
+.pip.s2{border-color:#b06020;background:rgba(176,96,32,.2);box-shadow:0 0 6px rgba(176,96,32,.3);}
+.pip.s3{border-color:var(--gold);background:rgba(201,168,76,.18);box-shadow:0 0 6px rgba(201,168,76,.3);}
+.pip.mine{cursor:pointer;}
+.pip.mine:hover{transform:scale(1.13);}
+.pip.others{cursor:default;opacity:.65;}
+.pip-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-left:3px;}
+.pip-reset{background:none;border:none;color:var(--muted);cursor:pointer;font-size:10px;padding:0 2px;transition:color .2s;font-family:'Cinzel',serif;letter-spacing:.05em;opacity:0;}
+.member-pips:hover .pip-reset{opacity:1;}
+.pip-reset:hover{color:var(--crimson2);}
+.item-card.team-done{border-color:var(--gold) !important;}
+.item-card.team-done::after{content:'⚜ Complete';position:absolute;top:8px;right:10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;}
+
+/* ── MEMBER PIPS ── */
+.member-pips{display:flex;gap:5px;margin-top:8px;align-items:center;}
+.pip{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .2s;position:relative;flex-shrink:0;}
+.pip[title]:hover::after{content:attr(title);position:absolute;bottom:26px;left:50%;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:3px 8px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--text);white-space:nowrap;pointer-events:none;z-index:10;}
+.pip.checked{border-color:var(--gold);background:rgba(201,168,76,.15);box-shadow:0 0 6px rgba(201,168,76,.3);}
+.pip.mine{cursor:pointer;}
+.pip.mine:hover{border-color:var(--gold2);transform:scale(1.1);}
+.pip.others{cursor:default;opacity:.6;}
+.pip-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-left:2px;}
+.item-card.team-done{border-color:var(--gold) !important;}
+.item-card.team-done::after{content:'⚜ Complete';position:absolute;top:8px;right:10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;}
+
+.add-row{margin-top:10px;display:flex;gap:8px;}
+.add-inp{flex:1;background:var(--surface);border:1px dashed var(--border);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:14px;outline:none;transition:border-color .2s;}
+.add-inp::placeholder{color:var(--muted);font-style:italic;}
+.games .add-inp:focus{border-color:var(--crimson);}
+.shows .add-inp:focus{border-color:var(--sapphire);}
+.books .add-inp:focus{border-color:var(--gold);}
+.add-meta{width:150px;background:var(--surface);border:1px dashed var(--border);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:13px;font-style:italic;outline:none;}
+.add-meta::placeholder{color:var(--muted);}
+.add-btn{background:none;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;padding:10px 14px;cursor:pointer;text-transform:uppercase;transition:all .2s;white-space:nowrap;}
+.games .add-btn:hover{border-color:var(--crimson2);color:var(--crimson2);}
+.shows .add-btn:hover{border-color:var(--sapphire);color:#6a9fd8;}
+.books .add-btn:hover{border-color:var(--gold);color:var(--gold);}
+.add-row-tags{margin-top:6px;}
+.add-sel{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 12px;color:var(--text);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.06em;outline:none;cursor:pointer;transition:border-color .2s;min-width:0;}
+.add-sel option{background:var(--surface2);color:var(--text);}
+.games .add-sel:focus{border-color:var(--crimson);}
+.shows .add-sel:focus{border-color:var(--sapphire);}
+.books .add-sel:focus{border-color:var(--gold);}
+
+/* ── REVIEWS ── */
+.reviews-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.reviews-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+.btn-new-review{background:none;border:1px solid var(--violet);border-radius:4px;color:var(--violet2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all .2s;}
+.btn-new-review:hover{background:rgba(107,63,160,.15);box-shadow:0 0 12px var(--glow-v);}
+
+.review-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden;transition:all .25s;}
+.review-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--violet2),var(--violet));}
+.review-card:hover{border-color:var(--muted);box-shadow:0 4px 20px var(--glow-v);}
+
+.review-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px;}
+.review-type-badge{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:rgba(107,63,160,.25);color:var(--violet2);border:1px solid rgba(107,63,160,.4);flex-shrink:0;margin-top:2px;}
+.review-subject{font-size:16px;color:var(--text);flex:1;line-height:1.3;}
+.review-author-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.review-author{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;}
+.review-date{font-size:10px;color:var(--muted);font-style:italic;}
+.review-stars{color:var(--gold);font-size:14px;letter-spacing:2px;}
+
+.review-body{font-size:14px;color:var(--text);line-height:1.7;opacity:.9;font-style:italic;border-top:1px solid var(--border);padding-top:12px;margin-top:4px;}
+.review-del{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;opacity:0;transition:all .2s;}
+.review-card:hover .review-del{opacity:1;}
+.review-del:hover{color:var(--crimson2);}
+
+/* Review form modal */
+.modal-overlay{position:fixed;inset:0;z-index:150;background:rgba(7,6,15,.9);display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:36px;width:100%;max-width:540px;position:relative;}
+.modal-box::before{content:'';position:absolute;inset:0;border-radius:6px;background:linear-gradient(135deg,rgba(107,63,160,.08),rgba(42,74,138,.06));pointer-events:none;}
+.modal-title{font-family:'Cinzel',serif;font-size:14px;letter-spacing:.18em;color:var(--gold2);text-transform:uppercase;margin-bottom:20px;position:relative;}
+.modal-form{display:flex;flex-direction:column;gap:12px;position:relative;}
+.modal-inp{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:11px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:14px;outline:none;transition:border-color .2s;width:100%;}
+.modal-inp:focus{border-color:var(--violet2);}
+.modal-inp::placeholder{color:var(--muted);font-style:italic;}
+.modal-sel{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:11px 14px;color:var(--text);font-family:'Cinzel',serif;font-size:12px;letter-spacing:.08em;outline:none;width:100%;cursor:pointer;}
+.modal-sel option{background:var(--surface2);}
+.modal-ta{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:11px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:14px;line-height:1.6;outline:none;resize:vertical;min-height:120px;width:100%;}
+.modal-ta:focus{border-color:var(--violet2);}
+.modal-ta::placeholder{color:var(--muted);font-style:italic;}
+.star-selector{display:flex;gap:6px;justify-content:center;padding:6px 0;}
+.star-btn{background:none;border:none;font-size:22px;cursor:pointer;color:var(--border);transition:all .15s;filter:grayscale(1);}
+.star-btn.lit{color:var(--gold);filter:none;}
+.star-btn:hover{transform:scale(1.2);}
+.modal-row{display:flex;gap:10px;}
+.modal-row .modal-inp{flex:1;}
+.modal-actions{display:flex;gap:10px;margin-top:6px;}
+.btn-cancel{flex:1;background:none;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:12px;cursor:pointer;transition:all .2s;}
+.btn-cancel:hover{border-color:var(--crimson2);color:var(--crimson2);}
+.btn-submit{flex:2;background:linear-gradient(135deg,var(--violet),var(--navy2));border:1px solid var(--violet2);border-radius:4px;color:var(--gold2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:12px;cursor:pointer;transition:all .2s;}
+.btn-submit:hover{box-shadow:0 0 16px var(--glow-v);}
+
+/* ── ESSAYS ── */
+.essays-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.essays-filters{display:flex;gap:6px;flex-wrap:wrap;}
+.filter-chip{background:none;border:1px solid var(--border);border-radius:20px;color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.filter-chip.active,.filter-chip:hover{border-color:var(--emerald2);color:var(--emerald2);}
+.btn-new-essay{background:none;border:1px solid var(--emerald2);border-radius:4px;color:var(--emerald2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all .2s;}
+.btn-new-essay:hover{background:rgba(42,154,94,.12);box-shadow:0 0 12px var(--glow-g);}
+
+.essay-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:16px;position:relative;overflow:hidden;transition:all .25s;cursor:pointer;}
+.essay-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--emerald2),var(--emerald));}
+.essay-card:hover{border-color:var(--muted);box-shadow:0 4px 20px var(--glow-g);}
+.essay-preview{padding:20px 20px 16px;}
+.essay-meta-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.essay-type{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;flex-shrink:0;}
+.essay-type.original{background:rgba(42,154,94,.2);color:var(--emerald2);border:1px solid rgba(42,154,94,.35);}
+.essay-type.logged{background:rgba(42,74,138,.2);color:#6a9fd8;border:1px solid rgba(42,74,138,.35);}
+.essay-title-text{font-size:17px;color:var(--text);line-height:1.3;flex:1;}
+.essay-author-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.essay-author{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;color:var(--gold);}
+.essay-date{font-size:10px;color:var(--muted);font-style:italic;}
+.essay-excerpt{font-size:13px;color:var(--muted);line-height:1.6;font-style:italic;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;}
+.essay-footer{padding:10px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.essay-tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:rgba(42,154,94,.12);color:var(--emerald2);border:1px solid rgba(42,154,94,.25);}
+.essay-read-more{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+.essay-del{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;opacity:0;transition:all .2s;z-index:2;}
+.essay-card:hover .essay-del{opacity:1;}
+.essay-del:hover{color:var(--crimson2);}
+
+/* Essay full-read modal */
+.essay-full-body{font-size:15px;color:var(--text);line-height:1.85;max-height:60vh;overflow-y:auto;padding-right:8px;border-top:1px solid var(--border);padding-top:16px;margin-top:8px;white-space:pre-wrap;}
+.essay-ext-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:#6a9fd8;text-decoration:underline;margin-top:8px;display:block;}
+
+/* Modal essay form */
+.essay-mode-toggle{display:flex;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:4px;}
+.mode-btn{flex:1;background:none;border:none;padding:10px;color:var(--muted);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.mode-btn.active{background:rgba(42,154,94,.15);color:var(--emerald2);}
+
+/* ── HANGOUT CHAT SUB-TAB ── */
+.hangout-subtabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:0;background:var(--surface);}
+.hst-btn{flex:1;padding:10px 8px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.hst-btn.active{color:var(--gold2);border-bottom-color:#2a8a8a;}
+.hst-btn:hover:not(.active){color:var(--text);}
+.hst-panel{display:none;}
+.hst-panel.active{display:flex;flex-direction:column;}
+#chat-panel{flex:1;display:flex;flex-direction:column;min-height:0;}
+
+/* Chat panel */
+#chat-panel{height:var(--hh, 500px);flex-direction:column;}
+.chat-messages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-height:0;}
+.chat-msg{display:flex;gap:8px;align-items:flex-start;}
+.chat-msg.mine{flex-direction:row-reverse;}
+.chat-avatar{width:26px;height:26px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.chat-bubble{max-width:75%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;position:relative;}
+.chat-msg.mine .chat-bubble{background:var(--navy2);border-color:var(--sapphire);}
+.chat-sender{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:3px;}
+.chat-msg.mine .chat-sender{text-align:right;}
+.chat-text{font-size:13px;color:var(--text);line-height:1.5;word-break:break-word;}
+.chat-time{font-size:9px;color:var(--muted);margin-top:3px;font-style:italic;}
+.chat-msg.mine .chat-time{text-align:right;}
+
+/* Image / file in chat */
+.chat-img{max-width:100%;max-height:320px;width:auto;height:auto;border-radius:6px;display:block;margin-top:6px;cursor:pointer;object-fit:contain;background:var(--surface2);transition:opacity .2s;}
+.chat-img:hover{opacity:.9;}
+.chat-img-wrap{position:relative;display:inline-block;max-width:100%;}
+.chat-img-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--muted);margin-top:3px;display:block;}
+.chat-file{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:8px 10px;margin-top:4px;text-decoration:none;}
+.chat-file-icon{font-size:18px;flex-shrink:0;}
+.chat-file-name{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.08em;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.chat-file-size{font-size:9px;color:var(--muted);flex-shrink:0;}
+
+/* Chat input bar */
+.chat-input-bar{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--border);background:var(--surface);flex-shrink:0;align-items:center;}
+.chat-inp{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:9px 14px;color:var(--text);font-family:'IM Fell English',serif;font-size:14px;outline:none;transition:border-color .2s;}
+.chat-inp:focus{border-color:#2a8a8a;}
+.chat-inp::placeholder{color:var(--muted);font-style:italic;}
+.chat-attach-btn{background:none;border:1px solid var(--border);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;font-size:15px;color:var(--muted);}
+.chat-attach-btn:hover{border-color:#2a8a8a;color:var(--text);}
+.chat-send-btn{background:linear-gradient(135deg,var(--navy2),#2a8a8a);border:none;border-radius:20px;padding:9px 16px;color:var(--gold2);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.chat-send-btn:hover{box-shadow:0 0 10px rgba(42,138,138,.4);}
+.chat-upload-progress{height:2px;background:var(--border);position:relative;display:none;}
+.chat-upload-progress.active{display:block;}
+.chat-upload-bar{height:100%;background:#2a8a8a;width:0%;transition:width .3s;}
+#chat-file-input{display:none;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* ── HANGOUT ── */
+.tab-btn.hangout::before{background:linear-gradient(135deg,rgba(42,138,138,.3),transparent);}
+.tab-btn.active.hangout{box-shadow:inset 0 -2px 0 #2a8a8a;}
+.hangout-header-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.hangout-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+.hangout-controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+
+/* Persistent voice bar */
+#voice-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:var(--surface);border-top:1px solid var(--border);padding:6px 16px;display:none;align-items:center;gap:12px;}
+#voice-bar.active{display:flex;}
+.vb-room{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.12em;color:var(--gold2);flex:1;}
+.vb-mic-dot{width:8px;height:8px;border-radius:50%;background:var(--crimson2);box-shadow:0 0 6px var(--crimson2);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.vb-btn{background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;cursor:pointer;transition:all .2s;}
+.vb-btn:hover{border-color:var(--crimson2);color:var(--crimson2);}
+.vb-goto{border-color:var(--sapphire);color:#6a9fd8;}
+.vb-goto:hover{border-color:#6a9fd8;color:var(--text);}
+
+/* ── DYNAMIC SPLIT LAYOUT ──
+   Total hangout height = viewport minus header/tabs/voicebar/padding.
+   CSS custom property --hh (hangout height) is set by JS on load & resize.
+   Falls back to a safe clamp if JS hasn't run yet.                        */
+:root{ --hh: clamp(400px, calc(100vh - 260px), 900px); }
+
+.hangout-split{
+  display: grid;
+  grid-template-columns: 1fr clamp(280px, 35%, 420px);
+  gap: 10px;
+  align-items: start;
+  height: var(--hh);
+}
+@media(max-width:700px){
+  .hangout-split{
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+
+/* Twitch pane fills available height; embed takes remainder after header+selector */
+.twitch-pane{
+  background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;display:flex;flex-direction:column;height:100%;
+}
+.twitch-pane-header{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border);background:var(--surface2);flex-shrink:0;}
+.twitch-pane-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--text);text-transform:uppercase;flex:1;}
+.twitch-live-dot{width:8px;height:8px;border-radius:50%;background:var(--crimson2);box-shadow:0 0 6px var(--crimson2);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+.twitch-channel-row{display:flex;gap:6px;padding:8px 12px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.twitch-channel-sel{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:6px 8px;color:var(--text);font-family:'Cinzel',serif;font-size:11px;letter-spacing:.06em;outline:none;cursor:pointer;min-width:0;}
+.twitch-channel-sel option{background:var(--surface2);}
+.twitch-custom-inp{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:6px 8px;color:var(--text);font-family:'IM Fell English',serif;font-size:13px;outline:none;display:none;}
+.twitch-custom-inp::placeholder{color:var(--muted);font-style:italic;}
+.btn-twitch{background:linear-gradient(135deg,#9146ff,#6441a5);border:none;border-radius:3px;color:#fff;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;padding:6px 10px;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.btn-twitch:hover{box-shadow:0 0 12px rgba(145,70,255,.4);}
+
+/* Embed fills remaining height in the flex column */
+#twitch-embed-wrap{flex:1;min-height:0;background:#000;overflow:hidden;}
+#twitch-embed-wrap iframe{width:100%;height:100%;display:block;border:none;}
+.twitch-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:var(--surface2);}
+
+/* Jitsi pane fills available height */
+.jitsi-pane{
+  background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;display:flex;flex-direction:column;height:100%;
+}
+.jitsi-pane-header{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border);background:var(--surface2);flex-shrink:0;}
+.jitsi-pane-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--text);text-transform:uppercase;flex:1;}
+.jitsi-share-hint{padding:6px 12px;border-bottom:1px solid var(--border);background:var(--surface2);font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;flex-shrink:0;}
+.jitsi-stream-badge{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--crimson2);text-transform:uppercase;background:rgba(192,41,62,.12);border:1px solid rgba(192,41,62,.3);border-radius:2px;padding:2px 6px;display:none;}
+.jitsi-stream-badge.visible{display:block;}
+
+/* Jitsi iframe fills remaining space */
+#jitsi-container{flex:1;min-height:0;overflow:hidden;background:var(--surface2);}
+#jitsi-container iframe{width:100% !important;height:100% !important;}
+#jitsi-idle{display:flex;align-items:center;justify-content:center;height:100%;}
+#jitsi-idle span{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;}
+
+/* Spec modal */
+.spec-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.spec-row{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 12px;}
+.spec-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
+.spec-body{flex:1;}
+.spec-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:3px;}
+.spec-val{font-size:13px;color:var(--text);margin-bottom:4px;line-height:1.4;}
+.spec-warn{font-size:11px;color:#b06020;font-style:italic;line-height:1.5;border-top:1px solid var(--border);padding-top:4px;margin-top:3px;}
+.spec-danger{display:flex;gap:10px;align-items:flex-start;background:rgba(139,26,42,.12);border:1px solid rgba(192,41,62,.3);border-radius:4px;padding:12px;margin-top:4px;}
+
+/* Hangout idle */
+.hangout-idle-wrap{text-align:center;padding:40px 0;}
+.hangout-idle-icon{font-size:42px;margin-bottom:14px;opacity:.3;}
+.hangout-idle-text{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<!-- ── GATE SCREEN ── -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-title">⚜ Retrograde Millennials</div>
+    <div class="gate-sub">Identify Thyself, Brother</div>
+    <div class="gate-err" id="gate-err"></div>
+
+    <!-- Step 1: pick a slot -->
+    <div id="step-slots">
+      <div class="slot-grid" id="slot-grid"></div>
+      <button class="btn-link" onclick="showRegister()">Register New Member</button>
+    </div>
+
+    <!-- Step 2: enter PIN -->
+    <div id="step-pin" style="display:none;">
+      <div style="font-family:'Cinzel',serif;font-size:12px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:16px;" id="pin-greeting"></div>
+      <div class="pin-display" id="pin-display"></div>
+      <div class="pin-pad" id="pin-pad"></div>
+      <div style="margin-top:16px;display:flex;gap:10px;">
+        <button class="btn-cancel" style="flex:1;" onclick="backToSlots()">← Back</button>
+        <button class="btn-primary" style="flex:2;" onclick="submitPin()">Enter</button>
+      </div>
+    </div>
+
+    <!-- Step 3: register -->
+    <div id="step-register" style="display:none;">
+      <div class="gate-form">
+        <input class="gate-inp" id="reg-username" placeholder="Choose a name, brother…" maxlength="20">
+        <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:-4px;">Set your 8-digit cipher</div>
+        <div class="pin-display" id="reg-pin-display"></div>
+        <div class="pin-pad" id="reg-pin-pad"></div>
+        <button class="btn-primary" onclick="submitRegister()">Swear the Oath</button>
+        <button class="btn-link" onclick="backToSlots()">← Return</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div class="wrapper" id="app" style="display:none;">
+  <header>
+    <div class="crest">⚜</div>
+    <h1>Retrograde Millennials Club</h1>
+    <p class="subtitle">Hosted by the Triality of Man</p>
+    <div class="header-rule"><span>✦</span></div>
+  </header>
+
+  <!-- User Bar -->
+  <div id="user-bar">
+    <div class="ub-left">
+      <div class="ub-avatar" id="ub-avatar">👤</div>
+      <div>
+        <div class="ub-name" id="ub-name">—</div>
+        <div class="ub-sub">Member of the Triality</div>
+      </div>
+    </div>
+    <button class="btn-ghost" onclick="lockApp()">⟵ Leave</button>
+  </div>
+
+  <!-- Members Panel -->
+  <div id="members-panel">
+    <div class="members-panel-title">⚜ The Triality</div>
+    <div class="members-grid" id="members-grid"></div>
+  </div>
+
+  <!-- Tab Nav -->
+  <div class="tab-nav">
+    <button class="tab-btn games active" onclick="switchTab('games')">
+      <span class="tab-icon">⚔</span>Games
+    </button>
+    <button class="tab-btn shows" onclick="switchTab('shows')">
+      <span class="tab-icon">🜲</span>Shows
+    </button>
+    <button class="tab-btn books" onclick="switchTab('books')">
+      <span class="tab-icon">📜</span>Books
+    </button>
+    <button class="tab-btn reviews" onclick="switchTab('reviews')">
+      <span class="tab-icon">✦</span>Reviews
+    </button>
+    <button class="tab-btn essays" onclick="switchTab('essays')">
+      <span class="tab-icon">🖋</span>Essays
+    </button>
+    <button class="tab-btn hangout" onclick="switchTab('hangout')">
+      <span class="tab-icon">🎙</span>Hangout
+    </button>
+  </div>
+
+  <!-- GAMES -->
+  <div id="panel-games" class="tab-panel games active" style="display:block;">
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Quest Progress</span><span id="games-prog-lbl">0 / 0</span></div>
+      <div class="prog-track"><div class="prog-fill" id="games-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div id="games-genres"></div>
+  </div>
+
+  <!-- SHOWS -->
+  <div id="panel-shows" class="tab-panel shows" style="display:none;">
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Viewing Chronicle</span><span id="shows-prog-lbl">0 / 0</span></div>
+      <div class="prog-track"><div class="prog-fill" id="shows-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div id="shows-genres"></div>
+  </div>
+
+  <!-- BOOKS -->
+  <div id="panel-books" class="tab-panel books" style="display:none;">
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Tome Registry</span><span id="books-prog-lbl">0 / 0</span></div>
+      <div class="prog-track"><div class="prog-fill" id="books-prog-fill" style="width:0%"></div></div>
+    </div>
+    <div id="books-genres"></div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div id="panel-reviews" class="tab-panel reviews" style="display:none;">
+    <div class="reviews-header-row">
+      <span class="reviews-title">⟡ The Council's Judgments</span>
+      <button class="btn-new-review" onclick="openReviewModal()">+ New Review</button>
+    </div>
+    <div id="reviews-list"></div>
+    <div id="reviews-empty" style="text-align:center;padding:48px 0;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;display:none;">No judgments yet. Be the first to pass one.</div>
+  </div>
+
+  <!-- ESSAYS -->
+  <div id="panel-essays" class="tab-panel essays" style="display:none;">
+    <div class="essays-header-row">
+      <div class="essays-filters">
+        <button class="filter-chip active" onclick="filterEssays('all',this)">All</button>
+        <button class="filter-chip" onclick="filterEssays('original',this)">Written</button>
+        <button class="filter-chip" onclick="filterEssays('logged',this)">Logged</button>
+      </div>
+      <button class="btn-new-essay" onclick="openEssayModal()">+ New Essay</button>
+    </div>
+    <div id="essays-list"></div>
+    <div id="essays-empty" style="text-align:center;padding:48px 0;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;display:none;">The archives await your first scroll.</div>
+  </div>
+</div>
+
+  <!-- HANGOUT -->
+  <div id="panel-hangout" class="tab-panel hangout" style="display:none;">
+
+    <!-- Header row -->
+    <div class="hangout-header-row">
+      <div>
+        <div class="hangout-title">🎙 The War Room</div>
+        <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--muted);margin-top:4px;">Hot mic · One screen share at a time · Voice persists across tabs</div>
+      </div>
+      <div class="hangout-controls">
+        <select class="add-sel" id="hangout-room-sel" style="width:160px;">
+          <option value="lobby">⚔ Open Lobby</option>
+          <option value="games">🎮 Games Room</option>
+          <option value="shows">📺 Shows Room</option>
+          <option value="books">📖 Books Room</option>
+        </select>
+        <button class="btn-new-review" id="join-btn" onclick="joinHangout()">Join Room</button>
+        <button class="btn-ghost" id="leave-btn" onclick="leaveHangout()" style="display:none;">✕ Leave Voice</button>
+      </div>
+    </div>
+
+    <!-- Sub-tabs -->
+    <div class="hangout-subtabs">
+      <button class="hst-btn active" id="hst-stream" onclick="switchHangoutTab('stream')">📺 Stream & Voice</button>
+      <button class="hst-btn" id="hst-chat" onclick="switchHangoutTab('chat')">💬 Messages</button>
+    </div>
+
+    <!-- SUB-TAB: Stream & Voice -->
+    <div class="hst-panel active" id="hst-panel-stream">
+
+      <!-- Idle state -->
+      <div id="hangout-idle">
+        <div class="hangout-idle-wrap">
+          <div class="hangout-idle-icon">🎙</div>
+          <div class="hangout-idle-text">Select a room and join</div>
+          <div style="margin-top:10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--muted);">Voice stays live when you switch tabs · Twitch stream is optional</div>
+        </div>
+      </div>
+
+      <!-- Active layout -->
+      <div id="hangout-active" style="display:none;">
+        <div class="hangout-split">
+
+          <!-- LEFT — TWITCH STREAM -->
+          <div class="twitch-pane">
+            <div class="twitch-pane-header">
+              <div class="twitch-live-dot" id="twitch-dot" style="opacity:.3;"></div>
+              <span class="twitch-pane-title">📺 Live Stream</span>
+              <span id="twitch-on-badge" style="display:none;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:#9146ff;text-transform:uppercase;background:rgba(145,70,255,.12);border:1px solid rgba(145,70,255,.3);border-radius:2px;padding:2px 7px;">● Live</span>
+              <button id="close-stream-btn" onclick="closeStream()" style="display:none;" class="btn-ghost" title="Close stream, keep voice">✕ Stream</button>
+            </div>
+            <div class="twitch-channel-row">
+              <select class="twitch-channel-sel" id="twitch-channel-sel" onchange="onChannelSelChange()">
+                <optgroup label="Retro Gaming 24/7">
+                  <option value="RetroGameStream">RetroGameStream — 24/7 Classic</option>
+                  <option value="Sega">Sega Official</option>
+                  <option value="Nintendo">Nintendo</option>
+                  <option value="TwitchPresents">TwitchPresents</option>
+                </optgroup>
+                <optgroup label="Anime">
+                  <option value="retrocrush">RetroCrush — Classic Anime</option>
+                </optgroup>
+                <optgroup label="Events & Fights">
+                  <option value="GamesDoneQuick">Games Done Quick</option>
+                  <option value="saltybet">SaltyBet — AI Fights</option>
+                  <option value="ClassicGameRoom">Classic Game Room</option>
+                </optgroup>
+                <optgroup label="Custom">
+                  <option value="__custom__">Enter channel name…</option>
+                </optgroup>
+              </select>
+              <input class="twitch-custom-inp" id="twitch-custom-inp" placeholder="channel…" maxlength="40">
+              <button class="btn-twitch" onclick="loadTwitchChannel()">▶ Watch</button>
+            </div>
+            <div id="twitch-embed-wrap">
+              <div class="twitch-placeholder">
+                <div style="text-align:center;">
+                  <div style="font-size:28px;margin-bottom:10px;opacity:.4;">📺</div>
+                  <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;">No stream loaded</div>
+                  <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--muted);opacity:.6;margin-top:6px;">Select a channel above and press Watch</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT — JITSI VOICE -->
+          <div class="jitsi-pane">
+            <div class="jitsi-pane-header">
+              <span style="font-size:14px;">🎙</span>
+              <span class="jitsi-pane-title" id="jitsi-room-label">Voice Chat</span>
+              <span class="jitsi-stream-badge" id="stream-badge">● Sharing Screen</span>
+            </div>
+            <div class="jitsi-share-hint">🖥 Toolbar below · Share screen · One at a time</div>
+            <div id="jitsi-container">
+              <div id="jitsi-idle"><span>Joining room…</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SUB-TAB: Messages -->
+    <div class="hst-panel" id="hst-panel-chat">
+      <div id="chat-panel">
+        <!-- Messages list -->
+        <div class="chat-messages" id="chat-messages">
+          <div style="text-align:center;padding:24px 0;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;">Loading messages…</div>
+        </div>
+        <!-- Upload progress -->
+        <div class="chat-upload-progress" id="chat-upload-progress">
+          <div class="chat-upload-bar" id="chat-upload-bar"></div>
+        </div>
+        <!-- Input bar -->
+        <div class="chat-input-bar">
+          <input type="file" id="chat-file-input" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml,video/*,.pdf,.txt,.md" onchange="handleFileUpload(event)">
+          <button class="chat-attach-btn" onclick="document.getElementById('chat-file-input').click()" title="Attach file or image">📎</button>
+          <input class="chat-inp" id="chat-inp" placeholder="Message the triality…" maxlength="2000"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}">
+          <button class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── PERSISTENT VOICE BAR (visible across all tabs while in room) ── -->
+<div id="voice-bar">
+  <div class="vb-mic-dot"></div>
+  <div class="vb-room" id="vb-room-label">🎙 Connected</div>
+  <button class="vb-btn vb-goto" onclick="switchTab('hangout')">Go to Hangout</button>
+  <button class="vb-btn" onclick="leaveHangout()">✕ Leave</button>
+</div>
+
+<!-- ── SPEC CHECK MODAL (once per session) ── -->
+<div id="spec-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box" style="max-width:560px;">
+    <div class="modal-title" style="font-size:16px;">⚠ Before You Join — Hardware Check</div>
+    <div style="position:relative;z-index:1;">
+      <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">Minimum specs for streaming + voice</div>
+      <div class="spec-grid">
+        <div class="spec-row">
+          <span class="spec-icon">🖥</span>
+          <div class="spec-body">
+            <div class="spec-label">CPU</div>
+            <div class="spec-val">Intel Core i5 4th Gen / AMD Ryzen 3 1000 series or newer</div>
+            <div class="spec-warn">Below this: emulator may stutter under OBS load. Expect dropped frames and audio desync.</div>
+          </div>
+        </div>
+        <div class="spec-row">
+          <span class="spec-icon">💾</span>
+          <div class="spec-body">
+            <div class="spec-label">RAM</div>
+            <div class="spec-val">8GB minimum — 16GB recommended</div>
+            <div class="spec-warn">Below 8GB: OBS + emulator + browser may compete for memory. Crashes likely.</div>
+          </div>
+        </div>
+        <div class="spec-row">
+          <span class="spec-icon">📶</span>
+          <div class="spec-body">
+            <div class="spec-label">Upload Speed</div>
+            <div class="spec-val">5 Mbps minimum — 10 Mbps recommended</div>
+            <div class="spec-warn">Below 5 Mbps: stream buffers for viewers. Reduce OBS bitrate to 1500 Kbps at 480p.</div>
+          </div>
+        </div>
+        <div class="spec-row">
+          <span class="spec-icon">⚙</span>
+          <div class="spec-body">
+            <div class="spec-label">OBS Settings (retro)</div>
+            <div class="spec-val">Bitrate: 2500 Kbps · 1280×720 · 30fps · x264</div>
+            <div class="spec-warn">CPU above 80% in OBS: switch preset from "veryfast" to "ultrafast".</div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-danger">
+        <span style="font-size:16px;">🔴</span>
+        <div>
+          <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--crimson2);text-transform:uppercase;margin-bottom:4px;">One streamer at a time</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Only one member can share their screen at a time. Hot mic is always on — everyone in the room is heard. If someone is already streaming, wait for them to stop before starting yours.</div>
+        </div>
+      </div>
+      <div class="modal-actions" style="margin-top:20px;">
+        <button class="btn-cancel" onclick="closeSpecModal()">Not Ready</button>
+        <button class="btn-submit" onclick="confirmJoinHangout()" style="background:linear-gradient(135deg,var(--navy2),var(--sapphire));border-color:var(--sapphire);">I'm Good — Join Room</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── REVIEW MODAL ── -->
+<div id="review-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-title">✦ Pass Judgment</div>
+    <div class="modal-form">
+      <input class="modal-inp" id="rv-subject" placeholder="What are you reviewing?">
+      <div class="modal-row">
+        <select class="modal-sel" id="rv-type">
+          <option value="Game">Game</option>
+          <option value="Show">Show</option>
+          <option value="Book">Book</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;text-align:center;">Rating</div>
+      <div class="star-selector" id="star-selector">
+        <button class="star-btn" data-v="1" onclick="setStar(1)">★</button>
+        <button class="star-btn" data-v="2" onclick="setStar(2)">★</button>
+        <button class="star-btn" data-v="3" onclick="setStar(3)">★</button>
+        <button class="star-btn" data-v="4" onclick="setStar(4)">★</button>
+        <button class="star-btn" data-v="5" onclick="setStar(5)">★</button>
+      </div>
+      <textarea class="modal-ta" id="rv-body" placeholder="Your verdict… speak freely, brother."></textarea>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeReviewModal()">Cancel</button>
+        <button class="btn-submit" onclick="submitReview()">Submit Judgment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ESSAY MODAL (write/log) ── -->
+<div id="essay-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-title">🖋 Add to the Archives</div>
+    <div class="modal-form">
+      <div class="essay-mode-toggle">
+        <button class="mode-btn active" id="mode-write" onclick="setEssayMode('original')">✍ Write Original</button>
+        <button class="mode-btn" id="mode-log" onclick="setEssayMode('logged')">🔗 Log External</button>
+      </div>
+      <input class="modal-inp" id="es-title" placeholder="Title of the essay…">
+      <input class="modal-inp" id="es-topic" placeholder="Topic / genre tag…">
+      <div id="es-write-fields">
+        <textarea class="modal-ta" id="es-body" placeholder="Write your essay here… take your time." style="min-height:180px;"></textarea>
+      </div>
+      <div id="es-log-fields" style="display:none;">
+        <input class="modal-inp" id="es-author" placeholder="Original author…">
+        <input class="modal-inp" id="es-url" placeholder="Link / URL (optional)…">
+        <textarea class="modal-ta" id="es-notes" placeholder="Your notes or summary…" style="min-height:100px;"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeEssayModal()">Cancel</button>
+        <button class="btn-submit" style="background:linear-gradient(135deg,var(--emerald),var(--navy2));border-color:var(--emerald2);" onclick="submitEssay()">Seal & Archive</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ESSAY READ MODAL ── -->
+<div id="essay-read-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box" style="max-width:620px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px;">
+      <div class="modal-title" id="erm-title" style="margin-bottom:0;font-size:18px;"></div>
+      <button class="btn-cancel" style="padding:6px 14px;white-space:nowrap;" onclick="closeReadModal()">✕ Close</button>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+      <span class="essay-type" id="erm-type-badge"></span>
+      <span class="essay-author" id="erm-author"></span>
+      <span class="essay-date" id="erm-date"></span>
+    </div>
+    <div class="essay-full-body" id="erm-body"></div>
+    <a class="essay-ext-link" id="erm-link" href="#" target="_blank" style="display:none;"></a>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// FIREBASE SETUP
+// All data is shared across all members in real time.
+// Structure in Firebase:
+//   /accounts        → array of {username, pin}
+//   /queue           → { games:{}, shows:{}, books:{} } per-user states
+//   /reviews         → array of review objects
+//   /essays          → array of essay objects
+// ─────────────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyChbYE3pQTCD6z53lb97rhWZLkxWYh3CkY",
+  authDomain: "retrograde-millennials.firebaseapp.com",
+  databaseURL: "https://retrograde-millennials-default-rtdb.firebaseio.com",
+  projectId: "retrograde-millennials",
+  storageBucket: "retrograde-millennials.firebasestorage.app",
+  messagingSenderId: "605856008867",
+  appId: "1:605856008867:web:73ca66ec9a37b0951fcd16"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ─────────────────────────────────────────────────────────────
+// DB HELPERS
+// Simple wrappers so the rest of the code stays readable.
+// FB.get(path) → Promise<value>
+// FB.set(path, value) → Promise
+// FB.listen(path, cb) → sets up a real-time listener
+// ─────────────────────────────────────────────────────────────
+const FB = {
+  get(path){ return db.ref(path).once('value').then(s => s.val()); },
+  set(path, val){ return db.ref(path).set(val); },
+  listen(path, cb){ db.ref(path).on('value', snap => cb(snap.val())); }
+};
+
+// ─────────────────────────────────────────────────────────────
+// ACCOUNTS  (max 3 slots)
+// ─────────────────────────────────────────────────────────────
+const AVATARS = ['🗡','🛡','📖'];
+let accounts    = [];
+let currentUser = null;
+let selectedSlot = null;
+let pinBuffer   = '';
+let regPinBuffer = '';
+let essayFilter = 'all';
+
+// Listen for account changes — updates gate screen for everyone live
+FB.listen('accounts', val => {
+  accounts = val ? Object.values(val) : [];
+  buildSlotGrid();
+  if(currentUser) renderMembersPanel();
+});
+
+function saveAccounts(){
+  const obj = {};
+  accounts.forEach((a,i) => obj[i] = a);
+  FB.set('accounts', obj);
+}
+
+function buildSlotGrid(){
+  const grid = document.getElementById('slot-grid');
+  grid.innerHTML = '';
+  // Show filled slots
+  accounts.forEach((acc, i) => {
+    const card = document.createElement('div');
+    card.className = 'slot-card';
+    card.innerHTML = `<div class="slot-avi">${AVATARS[i]}</div>
+      <div class="slot-uname">${acc.username}</div>
+      <div class="slot-hint">Enter Cipher</div>`;
+    card.onclick = () => selectSlot(i);
+    grid.appendChild(card);
+  });
+  // Empty slots
+  for(let i = accounts.length; i < 3; i++){
+    const card = document.createElement('div');
+    card.className = 'slot-card';
+    card.innerHTML = `<div class="slot-avi" style="opacity:.3;">⬚</div>
+      <div class="slot-uname" style="color:var(--muted);">Open Seat</div>
+      <div class="slot-hint">Unoccupied</div>`;
+    card.onclick = () => showRegister();
+    grid.appendChild(card);
+  }
+}
+
+function selectSlot(i){
+  selectedSlot = i;
+  pinBuffer = '';
+  document.getElementById('step-slots').style.display = 'none';
+  document.getElementById('step-pin').style.display = 'block';
+  document.getElementById('pin-greeting').textContent = `Welcome back, ${accounts[i].username}`;
+  buildPinPad('pin-pad', 'pin-display', false);
+  renderPinDisplay('pin-display', pinBuffer, 8);
+  document.getElementById('gate-err').textContent = '';
+}
+
+function backToSlots(){
+  document.getElementById('step-slots').style.display = 'block';
+  document.getElementById('step-pin').style.display = 'none';
+  document.getElementById('step-register').style.display = 'none';
+  document.getElementById('gate-err').textContent = '';
+  pinBuffer = '';
+  regPinBuffer = '';
+  buildSlotGrid();
+}
+
+function submitPin(){
+  const acc = accounts[selectedSlot];
+  if(pinBuffer === acc.pin){
+    loginAs(selectedSlot);
+  } else {
+    document.getElementById('gate-err').textContent = 'Cipher incorrect. Try again.';
+    pinBuffer = '';
+    renderPinDisplay('pin-display', pinBuffer, 8);
+  }
+}
+
+function showRegister(){
+  if(accounts.length >= 3){
+    document.getElementById('gate-err').textContent = 'The Triality is complete. No new seats.';
+    return;
+  }
+  regPinBuffer = '';
+  document.getElementById('step-slots').style.display = 'none';
+  document.getElementById('step-register').style.display = 'block';
+  buildPinPad('reg-pin-pad', 'reg-pin-display', true);
+  renderPinDisplay('reg-pin-display', regPinBuffer, 8);
+}
+
+function submitRegister(){
+  const uname = document.getElementById('reg-username').value.trim();
+  if(!uname){ document.getElementById('gate-err').textContent = 'Speak your name, brother.'; return; }
+  if(regPinBuffer.length !== 8){ document.getElementById('gate-err').textContent = 'Your cipher must be 8 digits.'; return; }
+  if(accounts.find(a => a.username.toLowerCase() === uname.toLowerCase())){
+    document.getElementById('gate-err').textContent = 'That name is already sworn.'; return;
+  }
+  accounts.push({ username: uname, pin: regPinBuffer });
+  saveAccounts();
+  loginAs(accounts.length - 1);
+}
+
+function loginAs(i){
+  currentUser = accounts[i];
+  currentUser.index = i;
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('ub-avatar').textContent = AVATARS[i];
+  document.getElementById('ub-name').textContent = currentUser.username;
+  initApp();
+}
+
+function lockApp(){
+  currentUser = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('gate').style.display = 'flex';
+  pinBuffer = '';
+  regPinBuffer = '';
+  backToSlots();
+}
+
+// PIN pad builder
+function buildPinPad(padId, displayId, isReg){
+  const pad = document.getElementById(padId);
+  pad.innerHTML = '';
+  const nums = [1,2,3,4,5,6,7,8,9,'',0,'⌫'];
+  nums.forEach(n => {
+    const btn = document.createElement('div');
+    btn.className = 'pkey' + (n === '⌫' ? ' del' : '');
+    btn.textContent = n === '' ? '' : n;
+    if(n !== '') btn.onclick = () => {
+      if(n === '⌫'){
+        if(isReg){ regPinBuffer = regPinBuffer.slice(0,-1); renderPinDisplay(displayId, regPinBuffer, 8); }
+        else { pinBuffer = pinBuffer.slice(0,-1); renderPinDisplay(displayId, pinBuffer, 8); }
+      } else {
+        if(isReg){ if(regPinBuffer.length < 8){ regPinBuffer += n; renderPinDisplay(displayId, regPinBuffer, 8); } }
+        else { if(pinBuffer.length < 8){ pinBuffer += n; renderPinDisplay(displayId, pinBuffer, 8); } }
+      }
+    };
+    pad.appendChild(btn);
+  });
+}
+
+function renderPinDisplay(id, buf, len){
+  const disp = document.getElementById(id);
+  disp.innerHTML = '';
+  for(let i = 0; i < len; i++){
+    const dot = document.createElement('div');
+    dot.className = 'pin-dot' + (i < buf.length ? ' on' : '');
+    disp.appendChild(dot);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// QUEUE DATA
+// ─────────────────────────────────────────────────────────────
+const DATA = {
+  games:[
+    { genre:"RPG — Classic & Tactical", items:[
+      { name:"Final Fantasy I",                      meta:"NES / GBA · 1987",  tags:["Turn-Based","Classic"] },
+      { name:"Final Fantasy II",                     meta:"NES / GBA · 1988",  tags:["Turn-Based","Classic"] },
+      { name:"Final Fantasy III",                    meta:"NES / DS · 1990",   tags:["Turn-Based","Classic"] },
+      { name:"Final Fantasy Tactics",                meta:"PS1 · 1997",        tags:["Tactical","Strategy"] },
+      { name:"Golden Sun",                           meta:"GBA · 2001",        tags:["Turn-Based","Puzzle"] },
+      { name:"Golden Sun: The Lost Age",             meta:"GBA · 2002",        tags:["Turn-Based","Sequel"] },
+      { name:"Chrono Trigger",                       meta:"SNES · 1995",       tags:["Turn-Based","Time Travel"] },
+      { name:"Secret of Mana",                       meta:"SNES · 1993",       tags:["Action RPG","Co-op"] },
+      { name:"Breath of Fire II",                    meta:"SNES · 1994",       tags:["Turn-Based","Dragon"] },
+      { name:"Tactics Ogre",                         meta:"PS1 · 1995",        tags:["Tactical","Strategy"] },
+      { name:"Fire Emblem: Shadow Dragon",           meta:"Famicom · 1990",    tags:["SRPG","Classic"] },
+      { name:"Fire Emblem: Gaiden",                  meta:"Famicom · 1992",    tags:["SRPG","Exploration"] },
+      { name:"Fire Emblem: Mystery of the Emblem",   meta:"SNES · 1994",       tags:["SRPG","Classic"] },
+    ]},
+    { genre:"Platformer", items:[
+      { name:"Yoshi's Island",         meta:"SNES · 1995",      tags:["Platformer","Nintendo"] },
+      { name:"Kirby Tilt 'n' Tumble",  meta:"GBC · 2000",       tags:["Platformer","Unique"] },
+      { name:"Super Mario World",      meta:"SNES · 1990",      tags:["Platformer","Classic"] },
+      { name:"Donkey Kong Country",    meta:"SNES · 1994–1996", tags:["Platformer","Trilogy"] },
+      { name:"Kirby's Adventure",      meta:"NES · 1993",       tags:["Platformer","Kirby"] },
+    ]},
+    { genre:"Creature & Monster", items:[
+      { name:"Pokémon Red / Blue",       meta:"GB · 1996",   tags:["Gen I","Original"] },
+      { name:"Pokémon Gold / Silver",    meta:"GBC · 1999",  tags:["Gen II","Johto"] },
+      { name:"Pokémon Ruby / Sapphire",  meta:"GBA · 2002",  tags:["Gen III","Hoenn"] },
+      { name:"Dragon Warrior Monsters",  meta:"GBC · 1998",  tags:["Monster Taming","RPG"] },
+      { name:"Digimon World",            meta:"PS1 · 1999",  tags:["Monster Raising","Sim"] },
+    ]},
+  ],
+  shows:[
+    { genre:"Dark Fantasy & Epic", items:[
+      { name:"Berserk",              meta:"1997 · 25 eps",       tags:["Dark Fantasy","Manga"] },
+      { name:"Record of Lodoss War", meta:"OVA 1990 · 13 eps",   tags:["High Fantasy","Classic"] },
+      { name:"Claymore",             meta:"2007 · 26 eps",       tags:["Dark Fantasy","Action"] },
+      { name:"Rurouni Kenshin",      meta:"1996 · 94 eps",       tags:["Samurai","Historical"] },
+      { name:"Slayers",              meta:"1995 · Multi-season", tags:["Fantasy","Comedy"] },
+    ]},
+    { genre:"Long-Form Adventure", items:[
+      { name:"Inuyasha",                   meta:"2000 · 167 eps", tags:["Feudal Japan","Supernatural"] },
+      { name:"Avatar: The Last Airbender", meta:"2005 · 3 Books", tags:["Action","Western Anime"] },
+      { name:"Yu Yu Hakusho",              meta:"1992 · 112 eps", tags:["Supernatural","Tournament"] },
+      { name:"Flame of Recca",             meta:"1997 · 42 eps",  tags:["Ninja","Tournament"] },
+    ]},
+    { genre:"Psychological & Thriller", items:[
+      { name:"Monster",                     meta:"2004 · 74 eps", tags:["Psychological","Crime"] },
+      { name:"Paranoia Agent",              meta:"2004 · 13 eps", tags:["Psychological","Satoshi Kon"] },
+      { name:"Serial Experiments Lain",     meta:"1998 · 13 eps", tags:["Cyberpunk","Existential"] },
+      { name:"Now and Then, Here and There",meta:"1999 · 13 eps", tags:["Dark","Dystopian"] },
+    ]},
+  ],
+  books:[
+    { genre:"Epic Fantasy", items:[
+      { name:"The Name of the Wind",  meta:"Patrick Rothfuss · 2007",  tags:["Fantasy","Magic"] },
+      { name:"The Hobbit",            meta:"J.R.R. Tolkien · 1937",    tags:["High Fantasy","Classic"] },
+      { name:"The Way of Kings",      meta:"Brandon Sanderson · 2010", tags:["Epic","Cosmere"] },
+    ]},
+    { genre:"Science Fiction", items:[
+      { name:"Ender's Game",  meta:"Orson Scott Card · 1985",  tags:["Sci-Fi","Military"] },
+      { name:"Dune",          meta:"Frank Herbert · 1965",     tags:["Sci-Fi","Politics"] },
+      { name:"Snow Crash",    meta:"Neal Stephenson · 1992",   tags:["Cyberpunk","Satire"] },
+    ]},
+    { genre:"Modern Fantasy", items:[
+      { name:"Mistborn: The Final Empire", meta:"Brandon Sanderson · 2006", tags:["Fantasy","Heist"] },
+    ]},
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────
+// QUEUE STATE — per-user, 4 states per item, stored in Firebase
+// 0=none  1=started  2=paused  3=done
+// Team complete only when ALL members are at state 3
+// ─────────────────────────────────────────────────────────────
+const STATE_ICON  = ['', '⟳', '⏸', '✓'];
+const STATE_LABEL = ['Not started', 'Started', 'Paused', 'Done'];
+const STATE_CLASS = ['', 's1', 's2', 's3'];
+
+let queueState = { games:{}, shows:{}, books:{} };
+
+// Live listener — when any member changes a state, everyone sees it
+FB.listen('queue', val => {
+  queueState = val || { games:{}, shows:{}, books:{} };
+  if(currentUser){
+    ['games','shows','books'].forEach(t => renderPanel(t));
+    renderMembersPanel();
+  }
+});
+
+function saveQueue(){ FB.set('queue', queueState); }
+
+function getItemStates(tab, key){
+  return (queueState[tab] && queueState[tab][key]) ? queueState[tab][key] : {};
+}
+
+function isTeamDone(tab, key){
+  if(!accounts.length) return false;
+  const st = getItemStates(tab, key);
+  return accounts.every(a => st[a.username] === 3);
+}
+
+function myState(tab, key){
+  const st = getItemStates(tab, key);
+  return currentUser ? (st[currentUser.username] || 0) : 0;
+}
+
+// ─────────────────────────────────────────────────────────────
+// GENRE TAXONOMY — per tab
+// ─────────────────────────────────────────────────────────────
+const GENRES = {
+  games: {
+    'RPG': ['Turn-Based','Action RPG','JRPG','SRPG / Tactical','Dungeon Crawler','Roguelike','Soulslike','Open World RPG','MMORPG'],
+    'Action / Adventure': ['Hack & Slash','Beat \'em Up','Stealth','Metroidvania','Platformer','Action-Adventure','Survival'],
+    'Strategy': ['Real-Time Strategy','Turn-Based Strategy','Tower Defense','4X','Grand Strategy','Auto Battler'],
+    'Simulation': ['Life Sim','City Builder','Farm Sim','Vehicle Sim','Management'],
+    'Puzzle': ['Logic Puzzle','Physics Puzzle','Narrative Puzzle','Escape Room'],
+    'Fighting': ['2D Fighter','3D Fighter','Platform Fighter','Arena Brawler'],
+    'Shooter': ['FPS','TPS','Bullet Hell','Run & Gun','Shoot \'em Up'],
+    'Horror': ['Survival Horror','Psychological Horror','Action Horror'],
+    'Sports / Racing': ['Sports','Racing','Rhythm'],
+    'Creature / Monster': ['Monster Taming','Monster Raising','Card Battler'],
+    'Visual Novel': ['Romance','Mystery','Sci-Fi VN','Fantasy VN'],
+    'Other': ['Sandbox','Party','Idle','Other'],
+  },
+  shows: {
+    'Action / Adventure': ['Shonen','Samurai','Martial Arts','Superhero','Military','Space Opera'],
+    'Dark Fantasy': ['High Fantasy','Dark Fantasy','Isekai','Sword & Sorcery','Mythology'],
+    'Sci-Fi': ['Cyberpunk','Mecha','Space','Post-Apocalyptic','Time Travel'],
+    'Psychological': ['Psychological Thriller','Mystery','Horror','Supernatural','Existential'],
+    'Drama': ['Slice of Life','Romance','Historical','Political','Medical'],
+    'Comedy': ['Parody','Gag','Rom-Com','Iyashikei (Healing)'],
+    'Anthology': ['Anthology','Shorts','OVA'],
+    'Western Animation': ['Action','Comedy','Fantasy','Sci-Fi','Drama'],
+    'Live Action': ['Drama','Thriller','Fantasy','Sci-Fi','Reality'],
+    'Other': ['Documentary','Sport','Music','Other'],
+  },
+  books: {
+    'Epic Fantasy': ['High Fantasy','Dark Fantasy','Sword & Sorcery','Grimdark','LitRPG'],
+    'Science Fiction': ['Hard Sci-Fi','Space Opera','Cyberpunk','Dystopian','Military Sci-Fi','Biopunk'],
+    'Horror': ['Cosmic Horror','Gothic','Psychological','Supernatural'],
+    'Mystery / Thriller': ['Detective','Cozy Mystery','Noir','Political Thriller','Spy'],
+    'Historical Fiction': ['Ancient World','Medieval','Renaissance','Victorian','20th Century'],
+    'Philosophy / Non-Fiction': ['Philosophy','History','Science','Memoir','Essay Collection'],
+    'Graphic Novel / Manga': ['Shonen Manga','Seinen Manga','Graphic Novel','Comic Collection'],
+    'Other': ['Satire','Adventure','Romance','Other'],
+  }
+};
+
+// ─────────────────────────────────────────────────────────────
+// RENDER QUEUE PANELS
+// ─────────────────────────────────────────────────────────────
+function renderPanel(tab){
+  const cont = document.getElementById(`${tab}-genres`);
+  cont.innerHTML = '';
+  DATA[tab].forEach((sec, si) => {
+    const s = document.createElement('div');
+    s.className = 'genre-section';
+
+    // Build genre dropdown options for this tab
+    const genreOpts = Object.keys(GENRES[tab])
+      .map(g => `<option value="${g}">${g}</option>`).join('');
+
+    // Default subgenre options (first genre's subs)
+    const firstGenre  = Object.keys(GENRES[tab])[0];
+    const subOpts = GENRES[tab][firstGenre]
+      .map(s => `<option value="${s}">${s}</option>`).join('');
+
+    s.innerHTML = `
+      <div class="genre-header">
+        <span class="genre-title">${sec.genre}</span>
+        <div class="genre-line"></div>
+      </div>
+      <div class="items-grid" id="grid-${tab}-${si}"></div>
+      <div class="add-row">
+        <input class="add-inp" id="ai-${tab}-${si}" placeholder="Add a title…">
+        <input class="add-meta" id="am-${tab}-${si}" placeholder="Platform · Year">
+      </div>
+      <div class="add-row add-row-tags">
+        <select class="add-sel" id="ag-${tab}-${si}" onchange="updateSubgenres('${tab}',${si})">
+          ${genreOpts}
+        </select>
+        <select class="add-sel" id="as-${tab}-${si}">
+          ${subOpts}
+        </select>
+        <button class="add-btn" onclick="addItem('${tab}',${si})">+ Enlist</button>
+      </div>`;
+    cont.appendChild(s);
+    sec.items.forEach((_, ii) => renderCard(tab, si, ii));
+  });
+  updateProgress(tab);
+}
+
+function renderCard(tab, si, ii){
+  const item     = DATA[tab][si].items[ii];
+  const key      = `${tab}_${si}_${ii}`;
+  const states   = getItemStates(tab, key);
+  const teamDone = isTeamDone(tab, key);
+  const mySt     = myState(tab, key);
+  const grid     = document.getElementById(`grid-${tab}-${si}`);
+  const ex       = document.getElementById(`card-${key}`);
+  if(ex) ex.remove();
+
+  const card = document.createElement('div');
+  card.className = `item-card${teamDone ? ' done team-done' : ''}`;
+  card.id = `card-${key}`;
+
+  const tags = (item.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+
+  const doneCount  = accounts.filter(a => states[a.username] === 3).length;
+  const startCount = accounts.filter(a => states[a.username] === 1).length;
+  const pauseCount = accounts.filter(a => states[a.username] === 2).length;
+
+  // Pips — one per member, tapping cycles your own state; reset button wipes just yours
+  const pipHTML = accounts.map((acc, ai) => {
+    const st   = states[acc.username] || 0;
+    const isMe = currentUser && acc.username === currentUser.username;
+    const cls  = `pip ${STATE_CLASS[st]} ${isMe ? 'mine' : 'others'}`;
+    const tip  = `${acc.username}: ${STATE_LABEL[st]}`;
+    const click = isMe ? `onclick="cycleState('${tab}',${si},${ii})"` : '';
+    // Reset button only shows for current user's own pip
+    const reset = isMe && st > 0
+      ? `<button class="pip-reset" onclick="event.stopPropagation();resetState('${tab}',${si},${ii})" data-tip="Reset my progress">↺</button>`
+      : '';
+    return `<div class="${cls}" data-tip="${tip}" ${click}>${STATE_ICON[st]}</div>${reset}`;
+  }).join('');
+
+  let summary = teamDone ? 'All done!' : `${doneCount}/${accounts.length} done`;
+  if(!teamDone && startCount) summary += ` · ${startCount} playing`;
+  if(!teamDone && pauseCount) summary += ` · ${pauseCount} paused`;
+
+  const pipsSection = accounts.length
+    ? `<div class="member-pips">${pipHTML}<span class="pip-label">${summary}</span></div>`
+    : '';
+
+  // Checkbox reflects logged-in user's state; gold sword when team complete
+  const chkStyle = teamDone ? 'background:var(--gold);border-color:var(--gold2);color:var(--bg);'
+    : mySt===1 ? 'border-color:var(--sapphire);color:#6a9fd8;'
+    : mySt===2 ? 'border-color:#b06020;color:#d08030;'
+    : mySt===3 ? 'border-color:var(--gold);color:var(--gold2);' : '';
+  const chkIcon  = teamDone ? '⚔' : STATE_ICON[mySt];
+  const chkClick = `onclick="cycleState('${tab}',${si},${ii})"`;
+
+  card.innerHTML = `
+    <div class="item-check" ${chkClick} style="${chkStyle}">${chkIcon}</div>
+    <div class="item-body">
+      <div class="item-name" contenteditable="true"
+           oninput="DATA['${tab}'][${si}].items[${ii}].name=this.innerText.trim()"
+           onblur="DATA['${tab}'][${si}].items[${ii}].name=this.innerText.trim()">${item.name}</div>
+      <div class="item-meta" contenteditable="true"
+           oninput="DATA['${tab}'][${si}].items[${ii}].meta=this.innerText.trim()"
+           onblur="DATA['${tab}'][${si}].items[${ii}].meta=this.innerText.trim()">${item.meta}</div>
+      <div class="item-tags">${tags}</div>
+      ${pipsSection}
+    </div>
+    <button class="item-del" onclick="deleteItem('${tab}',${si},${ii})">✕</button>`;
+  grid.appendChild(card);
+}
+
+function cycleState(tab, si, ii){
+  if(!currentUser) return;
+  const key = `${tab}_${si}_${ii}`;
+  if(isTeamDone(tab, key)) return;
+  if(!queueState[tab]) queueState[tab] = {};
+  if(!queueState[tab][key]) queueState[tab][key] = {};
+  const cur = queueState[tab][key][currentUser.username] || 0;
+  queueState[tab][key][currentUser.username] = (cur + 1) % 4;
+  saveQueue();
+  renderCard(tab, si, ii);
+  updateProgress(tab);
+  renderMembersPanel();
+}
+
+function resetState(tab, si, ii){
+  if(!currentUser) return;
+  const key = `${tab}_${si}_${ii}`;
+  if(!queueState[tab] || !queueState[tab][key]) return;
+  queueState[tab][key][currentUser.username] = 0;
+  saveQueue();
+  renderCard(tab, si, ii);
+  updateProgress(tab);
+  renderMembersPanel();
+}
+
+function deleteItem(tab, si, ii){
+  DATA[tab][si].items.splice(ii,1);
+  const grid = document.getElementById(`grid-${tab}-${si}`);
+  grid.innerHTML = '';
+  DATA[tab][si].items.forEach((_,i) => renderCard(tab,si,i));
+  updateProgress(tab);
+}
+
+function updateSubgenres(tab, si){
+  const genre  = document.getElementById(`ag-${tab}-${si}`).value;
+  const subSel = document.getElementById(`as-${tab}-${si}`);
+  subSel.innerHTML = (GENRES[tab][genre] || [])
+    .map(s => `<option value="${s}">${s}</option>`).join('');
+}
+
+function addItem(tab, si){
+  const n = document.getElementById(`ai-${tab}-${si}`).value.trim();
+  if(!n) return;
+  const genre  = document.getElementById(`ag-${tab}-${si}`).value;
+  const subgen = document.getElementById(`as-${tab}-${si}`).value;
+  const meta   = document.getElementById(`am-${tab}-${si}`).value.trim();
+  const tags   = [genre, subgen].filter(Boolean);
+  DATA[tab][si].items.push({ name:n, meta, tags });
+  renderCard(tab, si, DATA[tab][si].items.length-1);
+  document.getElementById(`ai-${tab}-${si}`).value = '';
+  document.getElementById(`am-${tab}-${si}`).value = '';
+  updateProgress(tab);
+}
+
+function updateProgress(tab){
+  let total=0, done=0;
+  DATA[tab].forEach((sec,si) => sec.items.forEach((_,ii) => {
+    total++;
+    if(isTeamDone(tab, `${tab}_${si}_${ii}`)) done++;
+  }));
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById(`${tab}-prog-lbl`).textContent = `${done} / ${total} Completed`;
+  document.getElementById(`${tab}-prog-fill`).style.width = pct+'%';
+}
+
+// ─────────────────────────────────────────────────────────────
+// REVIEWS
+// ─────────────────────────────────────────────────────────────
+let reviews = [];
+let currentStars = 0;
+
+function saveReviews(){
+  const obj = {};
+  reviews.forEach((r,i) => obj[i] = r);
+  FB.set('reviews', obj);
+}
+
+// Live listener
+FB.listen('reviews', val => {
+  reviews = val ? Object.values(val) : [];
+  if(currentUser) renderReviews();
+});
+
+function renderReviews(){
+  const list = document.getElementById('reviews-list');
+  const empty = document.getElementById('reviews-empty');
+  list.innerHTML = '';
+  if(!reviews.length){ empty.style.display='block'; return; }
+  empty.style.display='none';
+  [...reviews].reverse().forEach((rv, ridx) => {
+    const actualIdx = reviews.length - 1 - ridx;
+    const stars = '★'.repeat(rv.stars) + '☆'.repeat(5-rv.stars);
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = `
+      <div class="review-top">
+        <span class="review-type-badge">${rv.type}</span>
+        <div class="review-subject">${rv.subject}</div>
+      </div>
+      <div class="review-author-row">
+        <span class="review-author">${rv.author}</span>
+        <span class="review-date">${rv.date}</span>
+        <span class="review-stars">${stars}</span>
+      </div>
+      <div class="review-body">${rv.body}</div>
+      <button class="review-del" onclick="deleteReview(${actualIdx})">✕</button>`;
+    list.appendChild(card);
+  });
+}
+
+function openReviewModal(){
+  document.getElementById('rv-subject').value = '';
+  document.getElementById('rv-body').value = '';
+  currentStars = 0;
+  setStar(0);
+  document.getElementById('review-modal').style.display = 'flex';
+}
+function closeReviewModal(){ document.getElementById('review-modal').style.display = 'none'; }
+
+function setStar(n){
+  currentStars = n;
+  document.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('lit', parseInt(b.dataset.v) <= n);
+  });
+}
+
+function submitReview(){
+  const subj = document.getElementById('rv-subject').value.trim();
+  const body = document.getElementById('rv-body').value.trim();
+  if(!subj || !body){ return; }
+  reviews.push({
+    subject: subj,
+    type: document.getElementById('rv-type').value,
+    stars: currentStars,
+    body,
+    author: currentUser.username,
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  });
+  saveReviews();
+  closeReviewModal();
+  renderReviews();
+}
+
+function deleteReview(i){
+  reviews.splice(i,1);
+  saveReviews();
+  renderReviews();
+}
+
+// ─────────────────────────────────────────────────────────────
+// ESSAYS
+// ─────────────────────────────────────────────────────────────
+let essays = [];
+let essayMode = 'original';
+
+function saveEssays(){
+  const obj = {};
+  essays.forEach((e,i) => obj[i] = e);
+  FB.set('essays', obj);
+}
+
+// Live listener
+FB.listen('essays', val => {
+  essays = val ? Object.values(val) : [];
+  if(currentUser) renderEssays();
+});
+
+function renderEssays(){
+  const list = document.getElementById('essays-list');
+  const empty = document.getElementById('essays-empty');
+  list.innerHTML = '';
+  const filtered = essayFilter === 'all' ? essays : essays.filter(e => e.kind === essayFilter);
+  if(!filtered.length){ empty.style.display='block'; return; }
+  empty.style.display='none';
+  [...filtered].reverse().forEach((es) => {
+    const actualIdx = essays.indexOf(es);
+    const excerpt = (es.body||es.notes||'').slice(0,180) + ((es.body||es.notes||'').length>180?'…':'');
+    const card = document.createElement('div');
+    card.className = 'essay-card';
+    card.innerHTML = `
+      <div class="essay-preview">
+        <div class="essay-meta-row">
+          <span class="essay-type ${es.kind}">${es.kind==='original'?'Original':'Logged'}</span>
+          <div class="essay-title-text">${es.title}</div>
+        </div>
+        <div class="essay-author-row">
+          <span class="essay-author">${es.author}</span>
+          <span class="essay-date">${es.date}</span>
+        </div>
+        <div class="essay-excerpt">${excerpt}</div>
+      </div>
+      <div class="essay-footer">
+        <span class="essay-tag">${es.topic||'Essay'}</span>
+        <span class="essay-read-more">Read Scroll →</span>
+      </div>
+      <button class="essay-del" onclick="event.stopPropagation();deleteEssay(${actualIdx})">✕</button>`;
+    card.onclick = () => openReadModal(actualIdx);
+    list.appendChild(card);
+  });
+}
+
+function filterEssays(f, el){
+  essayFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderEssays();
+}
+
+function openEssayModal(){
+  document.getElementById('es-title').value='';
+  document.getElementById('es-topic').value='';
+  document.getElementById('es-body').value='';
+  document.getElementById('es-author').value='';
+  document.getElementById('es-url').value='';
+  document.getElementById('es-notes').value='';
+  setEssayMode('original');
+  document.getElementById('essay-modal').style.display='flex';
+}
+function closeEssayModal(){ document.getElementById('essay-modal').style.display='none'; }
+
+function setEssayMode(m){
+  essayMode = m;
+  document.getElementById('mode-write').classList.toggle('active', m==='original');
+  document.getElementById('mode-log').classList.toggle('active', m==='logged');
+  document.getElementById('es-write-fields').style.display = m==='original'?'block':'none';
+  document.getElementById('es-log-fields').style.display  = m==='logged'?'flex':'none';
+  document.getElementById('es-log-fields').style.flexDirection='column';
+  document.getElementById('es-log-fields').style.gap='12px';
+}
+
+function submitEssay(){
+  const title = document.getElementById('es-title').value.trim();
+  if(!title) return;
+  const essay = {
+    kind: essayMode,
+    title,
+    topic: document.getElementById('es-topic').value.trim(),
+    author: essayMode==='original' ? currentUser.username : (document.getElementById('es-author').value.trim()||'Unknown'),
+    body: essayMode==='original' ? document.getElementById('es-body').value.trim() : '',
+    notes: essayMode==='logged'  ? document.getElementById('es-notes').value.trim() : '',
+    url:  essayMode==='logged'   ? document.getElementById('es-url').value.trim()  : '',
+    contributor: currentUser.username,
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  };
+  essays.push(essay);
+  saveEssays();
+  closeEssayModal();
+  renderEssays();
+}
+
+function deleteEssay(i){
+  essays.splice(i,1);
+  saveEssays();
+  renderEssays();
+}
+
+function openReadModal(i){
+  const es = essays[i];
+  document.getElementById('erm-title').textContent = es.title;
+  document.getElementById('erm-type-badge').textContent = es.kind==='original'?'Original':'Logged';
+  document.getElementById('erm-type-badge').className = `essay-type ${es.kind}`;
+  document.getElementById('erm-author').textContent = es.author;
+  document.getElementById('erm-date').textContent = es.date;
+  const bodyEl = document.getElementById('erm-body');
+  bodyEl.textContent = es.kind==='original' ? (es.body||'') : (es.notes||'No notes provided.');
+  const linkEl = document.getElementById('erm-link');
+  if(es.url){ linkEl.href=es.url; linkEl.textContent='→ Read original source'; linkEl.style.display='block'; }
+  else { linkEl.style.display='none'; }
+  document.getElementById('essay-read-modal').style.display='flex';
+}
+function closeReadModal(){ document.getElementById('essay-read-modal').style.display='none'; }
+
+// ─────────────────────────────────────────────────────────────
+// MEMBERS PANEL
+// ─────────────────────────────────────────────────────────────
+function renderMembersPanel(){
+  const grid = document.getElementById('members-grid');
+  grid.innerHTML = '';
+
+  // Count per-user stats across all tabs and items
+  function getMemberStats(username){
+    const stats = { started:0, paused:0, done:0, total:0 };
+    ['games','shows','books'].forEach(tab => {
+      DATA[tab].forEach((sec, si) => {
+        sec.items.forEach((_, ii) => {
+          const key = `${tab}_${si}_${ii}`;
+          const st = (queueState[tab] && queueState[tab][key] && queueState[tab][key][username]) || 0;
+          stats.total++;
+          if(st===1) stats.started++;
+          if(st===2) stats.paused++;
+          if(st===3) stats.done++;
+        });
+      });
+    });
+    return stats;
+  }
+
+  // Render up to 3 slots
+  for(let i = 0; i < 3; i++){
+    const card = document.createElement('div');
+    if(i < accounts.length){
+      const acc = accounts[i];
+      const isMe = currentUser && acc.username === currentUser.username;
+      const s = getMemberStats(acc.username);
+      card.className = `member-card${isMe ? ' is-me' : ''}`;
+      card.innerHTML = `
+        ${isMe ? '<span class="mc-you">You</span>' : ''}
+        <div class="mc-avatar">${AVATARS[i]}</div>
+        <div class="mc-name">${acc.username}</div>
+        <div class="mc-divider"></div>
+        <div class="mc-stats">
+          <div class="mc-stat">
+            <span class="mc-stat-label">Playing</span>
+            <span class="mc-stat-val s1">${s.started}</span>
+          </div>
+          <div class="mc-stat">
+            <span class="mc-stat-label">Paused</span>
+            <span class="mc-stat-val s2">${s.paused}</span>
+          </div>
+          <div class="mc-stat">
+            <span class="mc-stat-label">Done</span>
+            <span class="mc-stat-val s3">${s.done}</span>
+          </div>
+          <div class="mc-divider"></div>
+          <div class="mc-stat">
+            <span class="mc-stat-label">Total</span>
+            <span class="mc-stat-val">${s.total}</span>
+          </div>
+        </div>`;
+    } else {
+      card.className = 'member-card empty';
+      card.innerHTML = `
+        <div class="mc-avatar" style="opacity:.3;">⬚</div>
+        <div class="mc-name" style="color:var(--muted);font-size:10px;">Open Seat</div>`;
+    }
+    grid.appendChild(card);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// TAB SWITCH
+// ─────────────────────────────────────────────────────────────
+function switchTab(tab){
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('panel-' + tab);
+  panel.classList.add('active');
+  panel.style.display = 'block';
+  document.querySelector('.tab-btn.' + tab).classList.add('active');
+  if(tab === 'hangout') requestAnimationFrame(setHangoutHeight);
+}
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// Firebase listeners are already running by the time loginAs fires.
+// initApp just does the first render with whatever data is loaded.
+// ─────────────────────────────────────────────────────────────
+function initApp(){
+  // Panels are rendered by Firebase listeners when data arrives.
+  // Queue listener re-renders games/shows/books when queue data loads.
+  // Reviews and essays listeners re-render their tabs when data loads.
+  // This avoids rendering with empty state on slow mobile connections.
+  renderMembersPanel();
+  initChat();
+  runDailyFileCleanup();
+  // Trigger all listeners to re-render now that currentUser is set
+  ['games','shows','books'].forEach(t => renderPanel(t));
+  renderReviews();
+  renderEssays();
+}
+
+// ─────────────────────────────────────────────────────────────
+// HANGOUT — Jitsi (hot mic, persistent) + Twitch embed
+// Rules:
+//  - Spec modal fires once per session only
+//  - Voice persists across all tabs
+//  - Each room has its own independent Twitch stream state
+//  - Screen share available in Jitsi toolbar (one at a time)
+//  - Files auto-delete daily; messages persist
+// ─────────────────────────────────────────────────────────────
+let jitsiApi      = null;
+let pendingRoom   = null;
+let currentRoom   = null;
+let inRoom        = false;
+let specShownOnce = false;
+
+// Per-room Twitch state
+const roomTwitchState = {
+  lobby: { active: false, channel: null },
+  games: { active: false, channel: null },
+  shows: { active: false, channel: null },
+  books: { active: false, channel: null },
+};
+
+const ROOM_LABELS = {
+  lobby: '\u2694 Open Lobby',
+  games: '\uD83C\uDFAE Games Room',
+  shows: '\uD83D\uDCFA Shows Room',
+  books: '\uD83D\uDCD6 Books Room'
+};
+
+function joinHangout(){
+  if(inRoom){ switchTab('hangout'); return; }
+  pendingRoom = document.getElementById('hangout-room-sel').value;
+  if(!specShownOnce){
+    document.getElementById('spec-modal').style.display = 'flex';
+  } else {
+    confirmJoinHangout();
+  }
+}
+
+function closeSpecModal(){
+  document.getElementById('spec-modal').style.display = 'none';
+  pendingRoom = null;
+}
+
+function confirmJoinHangout(){
+  specShownOnce = true;
+  document.getElementById('spec-modal').style.display = 'none';
+
+  const room  = pendingRoom || 'lobby';
+  currentRoom = room;
+  const label = ROOM_LABELS[room] || room;
+
+  document.getElementById('hangout-idle').style.display   = 'none';
+  document.getElementById('hangout-active').style.display = 'block';
+  document.getElementById('join-btn').textContent         = 'Switch Room';
+  document.getElementById('leave-btn').style.display      = 'block';
+  document.getElementById('jitsi-room-label').textContent = label;
+  document.getElementById('vb-room-label').textContent    = '\uD83C\uDF99 ' + label;
+  document.getElementById('voice-bar').classList.add('active');
+  document.querySelector('.wrapper').style.paddingBottom  = '80px';
+
+  inRoom = true;
+  pendingRoom = null;
+
+  restoreRoomStream(room);
+
+  if(!window.JitsiMeetExternalAPI){
+    const s = document.createElement('script');
+    s.src = 'https://meet.jit.si/external_api.js';
+    s.onload = () => launchJitsi('RetrogradeMC-' + room);
+    document.head.appendChild(s);
+  } else {
+    launchJitsi('RetrogradeMC-' + room);
+  }
+}
+
+function launchJitsi(roomName){
+  const container = document.getElementById('jitsi-container');
+  container.innerHTML = '';
+  if(jitsiApi) jitsiApi.dispose();
+
+  jitsiApi = new JitsiMeetExternalAPI('meet.jit.si', {
+    roomName,
+    parentNode: container,
+    width: '100%', height: 460,
+    userInfo: { displayName: currentUser ? currentUser.username : 'Member' },
+    configOverwrite: {
+      startWithAudioMuted: false, startWithVideoMuted: true,
+      prejoinPageEnabled: false, disableDeepLinking: true,
+      desktopSharingChromeExtId: null, desktopSharingFirefoxExtId: null,
+    },
+    interfaceConfigOverwrite: {
+      TOOLBAR_BUTTONS: ['microphone','camera','desktop','chat','raisehand','tileview','fullscreen','hangup'],
+      SHOW_JITSI_WATERMARK: false, SHOW_WATERMARK_FOR_GUESTS: false,
+    }
+  });
+
+  jitsiApi.addEventListener('screenSharingStatusChanged', e => {
+    document.getElementById('stream-badge').classList.toggle('visible', !!e.on);
+  });
+}
+
+function leaveHangout(){
+  if(currentRoom && roomTwitchState[currentRoom]){
+    const iframe = document.querySelector('#twitch-embed-wrap iframe');
+    roomTwitchState[currentRoom].active = !!iframe;
+  }
+  if(jitsiApi){ jitsiApi.dispose(); jitsiApi = null; }
+  inRoom = false;
+  currentRoom = null;
+
+  document.getElementById('hangout-idle').style.display   = 'block';
+  document.getElementById('hangout-active').style.display = 'none';
+  document.getElementById('join-btn').textContent         = 'Join Room';
+  document.getElementById('leave-btn').style.display      = 'none';
+  document.getElementById('voice-bar').classList.remove('active');
+  document.querySelector('.wrapper').style.paddingBottom  = '100px';
+  document.getElementById('stream-badge').classList.remove('visible');
+  resetStreamUI();
+}
+
+function closeStream(){
+  if(currentRoom) roomTwitchState[currentRoom] = { active: false, channel: null };
+  resetStreamUI();
+}
+
+function resetStreamUI(){
+  document.getElementById('twitch-embed-wrap').innerHTML = '<div class="twitch-placeholder"><div style="text-align:center;"><div style="font-size:28px;margin-bottom:10px;opacity:.4;">\uD83D\uDCFA</div><div style="font-family:\'Cinzel\',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;">No stream loaded</div><div style="font-family:\'Cinzel\',serif;font-size:9px;letter-spacing:.08em;color:var(--muted);opacity:.6;margin-top:6px;">Select a channel above and press Watch</div></div></div>';
+  document.getElementById('twitch-dot').style.opacity       = '0.3';
+  document.getElementById('twitch-on-badge').style.display  = 'none';
+  document.getElementById('close-stream-btn').style.display = 'none';
+}
+
+function restoreRoomStream(room){
+  const state = roomTwitchState[room];
+  if(state && state.active && state.channel){
+    loadTwitchChannel(state.channel);
+  } else {
+    resetStreamUI();
+  }
+}
+
+function onChannelSelChange(){
+  const val = document.getElementById('twitch-channel-sel').value;
+  if(val === '__custom__'){
+    document.getElementById('twitch-custom-inp').style.display = 'block';
+    document.getElementById('twitch-channel-sel').style.display = 'none';
+    document.getElementById('twitch-custom-inp').focus();
+  }
+}
+
+function loadTwitchChannel(forceChannel){
+  let channel = forceChannel;
+  if(!channel){
+    const sel    = document.getElementById('twitch-channel-sel');
+    const custom = document.getElementById('twitch-custom-inp');
+    channel = sel.style.display === 'none' ? custom.value.trim().toLowerCase() : sel.value;
+    if(!channel || channel === '__custom__') return;
+    if(sel.style.display === 'none'){
+      sel.style.display    = 'block';
+      custom.style.display = 'none';
+      const opt = document.createElement('option');
+      opt.value = channel; opt.textContent = '\uD83C\uDFAE ' + channel; opt.selected = true;
+      sel.querySelector('optgroup[label="Custom"]').prepend(opt);
+      custom.value = '';
+    }
+  }
+  const wrap = document.getElementById('twitch-embed-wrap');
+  wrap.innerHTML = '';
+  const iframe = document.createElement('iframe');
+  iframe.src = 'https://player.twitch.tv/?channel=' + encodeURIComponent(channel) + '&parent=cjcedgelore.github.io&autoplay=true&muted=false';
+  iframe.allowFullscreen = true;
+  iframe.allow = 'autoplay; fullscreen';
+  iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+  wrap.appendChild(iframe);
+  if(currentRoom) roomTwitchState[currentRoom] = { active: true, channel };
+  document.getElementById('twitch-dot').style.opacity       = '1';
+  document.getElementById('twitch-on-badge').style.display  = 'inline-block';
+  document.getElementById('close-stream-btn').style.display = 'block';
+}
+
+// ─────────────────────────────────────────────────────────────
+// DAILY FILE CLEANUP
+// Runs on login. Deletes Storage files from yesterday/earlier,
+// marks chat records as expired. Messages are never deleted.
+// ─────────────────────────────────────────────────────────────
+function runDailyFileCleanup(){
+  const midnight = new Date(); midnight.setHours(0,0,0,0);
+  const cutoff   = midnight.getTime();
+
+  db.ref('chat').once('value').then(snap => {
+    const data = snap.val();
+    if(!data) return;
+    Object.entries(data).forEach(([key, msg]) => {
+      if((msg.type === 'file' || msg.type === 'image') &&
+          msg.timestamp < cutoff && msg.url && !msg.fileExpired){
+        try { storage.refFromURL(msg.url).delete().catch(()=>{}); } catch(e){}
+        db.ref('chat/' + key).update({ fileExpired: true, url: null });
+      }
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// DYNAMIC HANGOUT HEIGHT
+// Measures available viewport space and sets --hh so the split
+// layout fills exactly one screen without scrolling.
+// ─────────────────────────────────────────────────────────────
+function setHangoutHeight(){
+  // Elements that sit above the hangout split
+  const userBar    = document.getElementById('user-bar');
+  const membersP   = document.getElementById('members-panel');
+  const tabNav     = document.querySelector('.tab-nav');
+  const hangoutHdr = document.querySelector('.hangout-header-row');
+  const voiceBar   = document.getElementById('voice-bar');
+
+  const above = [userBar, membersP, tabNav, hangoutHdr].reduce((sum, el) => {
+    return sum + (el ? el.getBoundingClientRect().height : 0);
+  }, 0);
+
+  const vbH   = voiceBar && voiceBar.classList.contains('active')
+    ? voiceBar.getBoundingClientRect().height : 0;
+
+  // wrapper top padding (40px) + bottom padding + some breathing room
+  const reserved = above + vbH + 40 + 56 + 16;
+  const available = Math.max(300, window.innerHeight - reserved);
+
+  document.documentElement.style.setProperty('--hh', available + 'px');
+}
+
+window.addEventListener('resize', setHangoutHeight);
+// Also recalc when switching to the hangout tab
+const _origSwitchTab = switchTab;
+// ─────────────────────────────────────────────────────────────
+// FIREBASE STORAGE
+// ─────────────────────────────────────────────────────────────
+const storage = firebase.storage();
+
+// ─────────────────────────────────────────────────────────────
+// HANGOUT SUB-TAB SWITCHER
+// ─────────────────────────────────────────────────────────────
+function switchHangoutTab(tab){
+  document.querySelectorAll('.hst-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.hst-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`hst-${tab}`).classList.add('active');
+  document.getElementById(`hst-panel-${tab}`).classList.add('active');
+  if(tab === 'chat') scrollChatToBottom();
+}
+
+// ─────────────────────────────────────────────────────────────
+// CHAT — persistent messages via Firebase
+// /chat/{pushId} = { author, avatar, text, type, url, fileName,
+//                    fileSize, timestamp }
+// ─────────────────────────────────────────────────────────────
+let chatLoaded = false;
+
+function initChat(){
+  if(chatLoaded) return;
+  chatLoaded = true;
+
+  db.ref('chat').limitToLast(100).on('value', snap => {
+    const msgs = snap.val() ? Object.values(snap.val()) : [];
+    renderChatMessages(msgs);
+  });
+}
+
+function renderChatMessages(msgs){
+  const container = document.getElementById('chat-messages');
+  if(!msgs.length){
+    container.innerHTML = `<div style="text-align:center;padding:32px 0;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;">No messages yet. Say something, brother.</div>`;
+    return;
+  }
+  container.innerHTML = '';
+  msgs.forEach(msg => {
+    const isMe = currentUser && msg.author === currentUser.username;
+    const ai   = accounts.findIndex(a => a.username === msg.author);
+    const avi  = ai >= 0 ? AVATARS[ai] : '👤';
+    const time = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
+
+    const div = document.createElement('div');
+    div.className = `chat-msg${isMe ? ' mine' : ''}`;
+
+    let content = '';
+    if(msg.fileExpired){
+      content = `<div class="chat-text" style="color:var(--muted);font-style:italic;font-size:12px;">📎 ${msg.fileName||'File'} — expired and removed</div>`;
+    } else if(msg.type === 'image'){
+      const fname = msg.fileName || 'image';
+      const isGif = fname.toLowerCase().endsWith('.gif');
+      content = `<div class="chat-img-wrap">
+        <img class="chat-img" src="${msg.url}"
+          alt="${fname}"
+          loading="lazy"
+          decoding="async"
+          onclick="window.open('${msg.url}','_blank')"
+          onerror="this.style.display='none';this.nextSibling.style.display='block'">
+        <div style="display:none;padding:8px;font-family:'Cinzel',serif;font-size:10px;color:var(--muted);">⚠ Image failed to load</div>
+        <span class="chat-img-label">${fname}${isGif?' · GIF':''} · click to open full size</span>
+      </div>`;
+    } else if(msg.type === 'file'){
+      const size = msg.fileSize ? formatBytes(msg.fileSize) : '';
+      content = `<a class="chat-file" href="${msg.url}" target="_blank" download>
+        <span class="chat-file-icon">📄</span>
+        <span class="chat-file-name">${msg.fileName||'file'}</span>
+        <span class="chat-file-size">${size}</span>
+      </a>`;
+    } else {
+      content = `<div class="chat-text">${escapeHTML(msg.text||'')}</div>`;
+    }
+
+    div.innerHTML = `
+      <div class="chat-avatar">${avi}</div>
+      <div class="chat-bubble">
+        <div class="chat-sender">${msg.author}</div>
+        ${content}
+        <div class="chat-time">${time}</div>
+      </div>`;
+    container.appendChild(div);
+  });
+  scrollChatToBottom();
+}
+
+function scrollChatToBottom(){
+  const c = document.getElementById('chat-messages');
+  if(c) c.scrollTop = c.scrollHeight;
+}
+
+function sendChatMessage(){
+  if(!currentUser) return;
+  const inp  = document.getElementById('chat-inp');
+  const text = inp.value.trim();
+  if(!text) return;
+  inp.value = '';
+
+  db.ref('chat').push({
+    author:    currentUser.username,
+    text,
+    type:      'text',
+    timestamp: Date.now()
+  });
+}
+
+function handleFileUpload(event){
+  if(!currentUser) return;
+  const file = event.target.files[0];
+  if(!file) return;
+
+  // 25MB cap
+  if(file.size > 25 * 1024 * 1024){
+    alert('File too large — maximum 25MB.');
+    event.target.value = '';
+    return;
+  }
+
+  const isImage = file.type.startsWith('image/') || /\.(gif|png|jpg|jpeg|webp|svg)$/i.test(file.name);
+  const path    = `chat/${Date.now()}_${file.name}`;
+  const ref     = storage.ref(path);
+  const task    = ref.put(file);
+
+  // Show progress bar
+  const prog    = document.getElementById('chat-upload-progress');
+  const bar     = document.getElementById('chat-upload-bar');
+  prog.classList.add('active');
+  bar.style.width = '0%';
+
+  task.on('state_changed',
+    snap => {
+      bar.style.width = Math.round(snap.bytesTransferred / snap.totalBytes * 100) + '%';
+    },
+    err => {
+      prog.classList.remove('active');
+      alert('Upload failed: ' + err.message);
+    },
+    () => {
+      task.snapshot.ref.getDownloadURL().then(url => {
+        prog.classList.remove('active');
+        bar.style.width = '0%';
+        db.ref('chat').push({
+          author:    currentUser.username,
+          type:      isImage ? 'image' : 'file',
+          url,
+          fileName:  file.name,
+          fileSize:  file.size,
+          timestamp: Date.now()
+        });
+      });
+    }
+  );
+
+  event.target.value = '';
+}
+
+function formatBytes(bytes){
+  if(bytes < 1024)     return bytes + ' B';
+  if(bytes < 1048576)  return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1048576).toFixed(1) + ' MB';
+}
+
+function escapeHTML(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+          .replace(/"/g,'&quot;').replace(/'/g,'&#039;')
+          .replace(/\n/g,'<br>');
+}
+
+// Boot — Firebase listener on accounts kicks off buildSlotGrid automatically
+// No manual buildSlotGrid() call needed here since the listener handles it.
+</script>
+</body>
+</html>
